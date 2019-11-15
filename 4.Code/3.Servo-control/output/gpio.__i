@@ -1,0 +1,5 @@
+-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\Source\CMSIS -I.\Source\FWlib\inc -I.\Source\FWlib\src -I.\Source\BSP -I.\Source\APP -I.\Source\PUBLIC\delay -I.\Source\PUBLIC\sys -I.\Source\PUBLIC\usart -I.\Source\Protocol -I.\Source\APP\EXTI -I.\Source\APP\LCD -I.\Source\APP\OV7670 -I.\Source\APP\LED -I.\Source\APP\OLED
+-I C:\Users\Administrator\Desktop\STM32转向车\课程\1、小车前进后退\2.小车前进实验\RTE
+-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include
+-D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER
+-o .\output\gpio.o --omf_browse .\output\gpio.crf --depend .\output\gpio.d "Source\APP\OLED\gpio.c"

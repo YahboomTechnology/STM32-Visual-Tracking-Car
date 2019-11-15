@@ -1,0 +1,5 @@
+-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\Source\CMSIS -I.\Source\FWlib\inc -I.\Source\FWlib\src -I.\Source\BSP -I.\Source\APP -I.\Source\PUBLIC\delay -I.\Source\PUBLIC\sys -I.\Source\PUBLIC\usart -I.\Source\Protocol -I.\Source\APP\EXTI -I.\Source\APP\LCD -I.\Source\APP\OV7670 -I.\Source\APP\LED -I.\Source\APP\OLED
+-I "C:\Users\Administrator\Desktop\STM32转向车\课程\10.屏幕显示字体\新驱动板单线代码优化了最新代码 -改了摄像头引脚\RTE"
+-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.1.0\CMSIS\Include
+-D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER
+-o .\output\bsp_lightseeking.o --omf_browse .\output\bsp_lightseeking.crf --depend .\output\bsp_lightseeking.d "Source\BSP\bsp_lightseeking.c"

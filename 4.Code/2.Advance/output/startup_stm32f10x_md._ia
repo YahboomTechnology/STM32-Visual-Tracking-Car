@@ -1,0 +1,6 @@
+--cpu Cortex-M3 -g --apcs=interwork 
+-I E:\2.外贸\外贸产品资料\15.STM32视觉巡线小车\STM32-Visual-Tracking-Car\4.Code\2.Advance\RTE
+-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include
+-I Device\Include
+--pd "__UVISION_VERSION SETA 514" --pd "_RTE_ SETA 1"
+--list .\startup_stm32f10x_md.lst --xref -o .\output\startup_stm32f10x_md.o --depend .\output\startup_stm32f10x_md.d "Source\CMSIS\startup\startup_stm32f10x_md.s"

@@ -1,0 +1,1 @@
+AT commands are not case sensitive, with the Enter key and the newline£¨\r\n£© end

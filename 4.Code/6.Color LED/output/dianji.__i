@@ -1,0 +1,1 @@
+-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I.\CMSIS -I.\FWlib\inc -I.\FWlib\src -I.\hardware -I.\user -I "C:\Keil\ARM\INC" -I "C:\Keil\ARM\INC\ST\STM32F10x" -DUSE_STDPERIPH_DRIVER -DSTM32F10X_MD -o ".\output\dianji.o" --omf_browse ".\output\dianji.crf" --depend ".\output\dianji.d" "hardware\dianji.c"
