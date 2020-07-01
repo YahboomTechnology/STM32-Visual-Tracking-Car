@@ -27,7 +27,7 @@ float Distance_test(void);
 * Function       app_ultrasonic_mode
 * @author        sax_john
 * @date          2017.07.20    
-* @brief        
+* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -41,7 +41,7 @@ void app_ultrasonic_mode0(void)
 	
 	//printf("CSB:%d \r\n", Len);  	
 
-	if(Len < 25)//This data is distance to obstacle ,can be set according to the actual situation
+	if(Len < 25)
     { 
 			Angle_J1 = 130;
 			MiniCar_Run(300);
@@ -50,7 +50,7 @@ void app_ultrasonic_mode0(void)
     }
   else 
 		{
-		MiniCar_Run(300); //no obstacle ,advance
+		MiniCar_Run(300);
 		}
 	
 }

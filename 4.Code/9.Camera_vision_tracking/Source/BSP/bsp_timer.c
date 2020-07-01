@@ -4,7 +4,6 @@
 * @author       liusen
 * @version      V1.0
 * @date         2017.07.17
-* @brief        
 * @details      
 * @par History  
 *                 
@@ -24,11 +23,9 @@ extern int run;
 * Function       TIM1_Int_Init
 * @author        liusen
 * @date          2015.01.03    
-* @brief         
-* @param[in]     arr£ºAutomatic reload value¡£psc£ºClock prescaler
+
 * @param[out]    void
 * @retval        void
-* @par History   
 */
 void TIM1_Int_Init(u16 arr,u16 psc)
 {
@@ -36,10 +33,10 @@ void TIM1_Int_Init(u16 arr,u16 psc)
 	NVIC_InitTypeDef NVIC_InitStructure;
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE); 
-	
+
 	TIM_TimeBaseStructure.TIM_Period = arr; 
 	TIM_TimeBaseStructure.TIM_Prescaler = (psc-1); 
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; 
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  
 	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;   
 	TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure); 
@@ -48,19 +45,17 @@ void TIM1_Int_Init(u16 arr,u16 psc)
 
 	NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_IRQn;  
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3; 
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&NVIC_InitStructure);  
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;  
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; 
+	NVIC_Init(&NVIC_InitStructure); 
 
 
-	TIM_Cmd(TIM1, ENABLE); 
+	TIM_Cmd(TIM1, ENABLE);  	 
 }
 /**
 * Function       TIM1_Int_Init
 * @author        liusen
 * @date          2015.01.03    
-* @brief         
-* @param[in]     arr£ºAutomatic reload value¡£psc£ºClock prescaler
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -74,7 +69,7 @@ void TIM1_UP_IRQHandler(void)
 	speed2=speed*2;
 	if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)  
 	{
-		TIM_ClearITPendingBit(TIM1, TIM_IT_Update);  
+		TIM_ClearITPendingBit(TIM1, TIM_IT_Update); 
 		num++;
 		g_count++;
 	
@@ -92,7 +87,7 @@ void TIM1_UP_IRQHandler(void)
 		#ifdef USE_SERVO_J2
 		if(num <= (Angle_J2 * 11 + 500)/10)
 		{
-			GPIO_SetBits(Servo_J2_PORT, Servo_J2_PIN );		
+			GPIO_SetBits(Servo_J2_PORT, Servo_J2_PIN );	
 		}
 		else
 		{
@@ -108,7 +103,7 @@ void TIM1_UP_IRQHandler(void)
 		}
 		else
 		{
-			GPIO_ResetBits(Servo_J3_PORT, Servo_J3_PIN );		
+			GPIO_ResetBits(Servo_J3_PORT, Servo_J3_PIN );	
 		}
 		#endif
 
@@ -137,7 +132,7 @@ void TIM1_UP_IRQHandler(void)
 		#ifdef USE_SERVO_J6
 		if(num <= (Angle_J6 * 11 + 500)/10)
 		{
-			GPIO_SetBits(Servo_J6_PORT, Servo_J6_PIN );		
+			GPIO_SetBits(Servo_J6_PORT, Servo_J6_PIN );	
 		}
 		else
 		{

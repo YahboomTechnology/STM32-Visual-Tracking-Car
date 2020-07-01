@@ -22,7 +22,7 @@ u8 OV7670_Init(void)
 
 
 	
- 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_10|GPIO_Pin_11;				 
+ 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_10|GPIO_Pin_11;				
  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		
  	GPIO_Init(GPIOB, &GPIO_InitStructure);
  	GPIO_SetBits(GPIOB,GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_10|GPIO_Pin_11);	
@@ -32,13 +32,13 @@ u8 OV7670_Init(void)
 	//GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
  //	GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15;				
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15;				 
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		 
  	GPIO_Init(GPIOB, &GPIO_InitStructure);
  	GPIO_SetBits(GPIOB,GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15);	
 	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7|GPIO_Pin_8|GPIO_Pin_9;				
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7|GPIO_Pin_8|GPIO_Pin_9;				 
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 	
  	GPIO_Init(GPIOC, &GPIO_InitStructure);
  	GPIO_SetBits(GPIOC,GPIO_Pin_6|GPIO_Pin_7|GPIO_Pin_8|GPIO_Pin_9);	
 
@@ -52,7 +52,7 @@ u8 OV7670_Init(void)
 	   
   GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable,ENABLE);	//SWD
 
- 	SCCB_Init();        		 
+ 	SCCB_Init();        		 	  
  	if(SCCB_WR_Reg(0x12,0x80))return 1;	
 	delay_ms(50); 
 
@@ -80,14 +80,14 @@ void config_ov7670_OutPut(u16 xsta,u16 ysta,u16 width,u16 height,u8 ouput_mode){
 	ov7670_config.mode = ouput_mode;
 	
   
-	if(ouput_mode){	
+	if(ouput_mode){		
 		for(i=0;i<sizeof(ov7670_init_reg_tbl_YUV)/sizeof(ov7670_init_reg_tbl_YUV[0])/2;i++)
 		{
 			SCCB_WR_Reg(ov7670_init_reg_tbl_YUV[i][0],ov7670_init_reg_tbl_YUV[i][1]);
 			delay_ms(2);
 		}
 
-	}else{			
+	}else{				
 		for(i=0;i<sizeof(ov7670_init_reg_tbl_RGB565)/sizeof(ov7670_init_reg_tbl_RGB565[0])/2;i++)
 		{
 			SCCB_WR_Reg(ov7670_init_reg_tbl_RGB565[i][0],ov7670_init_reg_tbl_RGB565[i][1]);
@@ -98,12 +98,7 @@ void config_ov7670_OutPut(u16 xsta,u16 ysta,u16 width,u16 height,u8 ouput_mode){
 //	LCD_Clear(WHITE);	
 }
 ////////////////////////////////////////////////////////////////////////////
-//OV7670 function setting
-//0:automatic
-//1: sunny
-//2, cloudy
-//3, office
-//4, home
+
 void OV7670_Light_Mode(u8 mode)
 {
 	u8 reg13val=0XE7;
@@ -144,7 +139,7 @@ void OV7670_Light_Mode(u8 mode)
 //4,2
 void OV7670_Color_Saturation(u8 sat)
 {
-	u8 reg4f5054val=0X80;//Default sat = 2,Do not adjust the setting of chroma
+	u8 reg4f5054val=0X80;
  	u8 reg52val=0X22;
 	u8 reg53val=0X5E;
  	switch(sat)
@@ -172,7 +167,7 @@ void OV7670_Color_Saturation(u8 sat)
 	}
 	SCCB_WR_Reg(0X4F,reg4f5054val);	
 	SCCB_WR_Reg(0X50,reg4f5054val);	
-	SCCB_WR_Reg(0X51,0X00);			
+	SCCB_WR_Reg(0X51,0X00);		
 	SCCB_WR_Reg(0X52,reg52val);		
 	SCCB_WR_Reg(0X53,reg53val);		
 	SCCB_WR_Reg(0X54,reg4f5054val);	
@@ -230,8 +225,7 @@ void OV7670_Contrast(u8 contrast)
 	}
 	SCCB_WR_Reg(0X56,reg56val);	
 }
-
-    
+	    
 void OV7670_Special_Effects(u8 eft)
 {
 	u8 reg3aval=0X04;
@@ -284,20 +278,21 @@ void OV7670_Window_Set(u16 sx,u16 sy,u16 width,u16 height)
 	
 	endx=(sx+width*2)%784;	//   sx:HSTART endx:HSTOP    
  	endy=sy+height*2;		//   sy:VSTRT endy:VSTOP		
-
+	
 	temp=SCCB_RD_Reg(0X32);				
 	temp&=0XC0;
 	temp|=((endx&0X07)<<3)|(sx&0X07);	
 	SCCB_WR_Reg(0X032,temp);
 	SCCB_WR_Reg(0X17,sx>>3);			
-	SCCB_WR_Reg(0X18,endx>>3);			
+	SCCB_WR_Reg(0X18,endx>>3);		
+
 
 	temp=SCCB_RD_Reg(0X03);				
 	temp&=0XF0;
 	temp|=((endy&0X03)<<2)|(sy&0X03);
 	SCCB_WR_Reg(0X03,temp);				
 	SCCB_WR_Reg(0X19,sy>>2);			
-	SCCB_WR_Reg(0X1A,endy>>2);			
+	SCCB_WR_Reg(0X1A,endy>>2);		
 
 
 }

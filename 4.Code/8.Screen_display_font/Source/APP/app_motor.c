@@ -6,7 +6,7 @@
 * @date         2015.01.03
 * @brief        
 * @details      
-* @par History  Car motion control function
+* @par History  
 *                 
 * version:	liusen_20170717
 */
@@ -27,7 +27,7 @@ extern int speed,run;
 * @param[in]     Speed  £¨0~1000£© 
 * @param[out]    void
 * @retval        void
-* @par History   NO
+* @par History   no
 */
 void MiniCar_Back(int Speed0)
 {
@@ -44,7 +44,7 @@ void MiniCar_Back(int Speed0)
 * @param[in]     Speed  £¨0~1000£© 
 * @param[out]    void
 * @retval        void
-* @par History   NO
+* @par History   
 */
 void MiniCar_Run(int Speed0)
 {
@@ -53,14 +53,14 @@ void MiniCar_Run(int Speed0)
 }
 
 /**
-* Function       MiniCar_Back
+* Function       MiniCar_Stop
 * @author        john
 * @date          2018.10.9    
 * @brief         stop
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   NO
+* @par History   no
 */
 void MiniCar_Stop()
 {

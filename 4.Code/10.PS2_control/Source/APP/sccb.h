@@ -11,7 +11,7 @@
 #define SCCB_SCL    		PAout(12)	 	//SCL
 #define SCCB_SDA    		PAout(11) 		//SDA	 
 
-#define SCCB_READ_SDA    	PAin(11)  		//SDA    
+#define SCCB_READ_SDA    	PAin(11)  		
 #define SCCB_ID   			0X42  			//OV7670µÄID
 
 ///////////////////////////////////////////

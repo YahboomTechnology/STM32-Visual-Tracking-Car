@@ -4,7 +4,6 @@
 * @author       liusen
 * @version      V1.0
 * @date         2015.01.03
-* @brief        
 * @details      
 * @par History  
 *                 
@@ -26,15 +25,15 @@
 #include "ov7670.h"
 #include "bsp_colorful.h"
 #include<math.h>
+#include<stdlib.h>
 #define dir_p     0.2 //p   0.2    0.18
 #define dir_d     0.16//d  0.2       0.16
 
-
 float Distance_test(void);
-float bsp_getUltrasonicDistance0();
+float bsp_getUltrasonicDistance0(void);
 int g_modeSelect = 0;  
-u8 g_Boolfire = 0;	   
-float fla_cha=0;    
+u8 g_Boolfire = 0;	    
+float fla_cha=0;    //
 
 int offset,suducha;
 extern int speed;
@@ -46,19 +45,17 @@ int fz=120,zhongzhi=100;
 u8 date[80][240]={0};
 u8 black_line[5]={0};
 u8 dis_image[64][128]={0};//  64   128
-void UART1SendByte();
+void UART1SendByte(unsigned char SendData);
 extern void LCD_PrintImage(u8 *pucTable, u16 usRowNum, u16 usColumnNum);
-
 
 /**
 * Function       dis_play_image
 * @author        john
 * @date          2018.09.26    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History  
 */
 void dis_play_image()
 {
@@ -69,9 +66,9 @@ void dis_play_image()
 			{
 				dis_image[i][j]=0;
 			}
-     for(i=0,m=79;i<64;i++,m--)   
+     for(i=0,m=79;i<64;i++,m--)   //
      {
-       for(j=0,n=0;j<220,n<=127;j++)
+       for(j=0,n=0;j<220;j++)
           {					
             if(j<=92)
             {
@@ -79,7 +76,10 @@ void dis_play_image()
                 {
                    if(date[m][j]>=fz)
                      dis_image[i][n]=1;
-                     n++;
+									 if(n<=127)
+										{
+											n++;
+										}	
                 }
             
             }
@@ -87,7 +87,10 @@ void dis_play_image()
             {
                if(date[m][j]>=fz)
                   dis_image[i][n]=1;
-                   n++; 
+							 if(n<=127)
+								{
+									n++;
+								}	
             }
             else
             {
@@ -95,7 +98,10 @@ void dis_play_image()
               {
                  if(date[m][j]>=fz)
                     dis_image[i][n]=1;
-                    n++;
+								 if(n<=127)
+									{
+										n++;
+									}	
               }
             }   
           }
@@ -107,7 +113,6 @@ void dis_play_image()
 * Function       dir
 * @author        john
 * @date          2017.07.20    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -136,7 +141,6 @@ void dir()
 * Function       find_line
 * @author        john
 * @date          2017.07.20    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -144,7 +148,7 @@ void dir()
 */
 void find_line()
 {
-	int i,j,black,line,d,zhijiao,last,a,b,c,t;
+	int i,j,black,line,last,t;//d,zhijiao,a,b,c,
 	for(i=0;i<5;i++)
 		{
 			for(j=0;j<240;j++)
@@ -262,7 +266,6 @@ void find_line()
 * Function       senddate
 * @author        john
 * @date          2017.07.20    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -270,7 +273,7 @@ void find_line()
 */
 void senddate()
 {
-	u16 a, b,c;
+	u16 a, b;//,c;
 	for(a=0;a<80;a++)
 		for(b=220;b>0;b--)
 			{
@@ -279,14 +282,13 @@ void senddate()
 		UART1SendByte(0xff);
 }
 
-
 void ov7670_clock_set(u8 PLL) 
 { 
 	u8 temp=0;	  
 	RCC->CFGR&=0XFFFFFFFC;	
 	RCC->CR&=~0x01000000;  	  
 	RCC->CFGR&=~(0XF<<18);	
-	PLL-=2;
+	PLL-=2; 
 	RCC->CFGR|=PLL<<18;   	
 	RCC->CFGR|=1<<16;	  	//PLLSRC ON  
 	FLASH->ACR|=0x12;	   
@@ -303,8 +305,7 @@ void ov7670_clock_set(u8 PLL)
 /**
 * Function       camera_refresh
 * @author        john
-* @date          2017.07.20    
-* @brief         
+* @date          2017.07.20     
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -315,7 +316,7 @@ void camera_refresh()
 {
 	u32 i,j;
 	u8 color;
-	u8 A0=0,A1=0,A2=0,A3=0,A4=0,A5=0,A6=0,A7=0;
+//	u8 A0=0,A1=0,A2=0,A3=0,A4=0,A5=0,A6=0,A7=0;
 	if(ov_sta==2)
 	{
 //		LCD_Scan_Dir(U2D_L2R);		
@@ -334,12 +335,12 @@ void camera_refresh()
 					for(j=0; j<320; j++)//ov7670_config.width
 					{
 						OV7670_RCK_L;
-						color = (((GPIOB->IDR&0XFFFF)>>12)&0x0f)|(((GPIOC->IDR&0XFFFF)>>2)&0xF0);	
+						color = (((GPIOB->IDR&0XFFFF)>>12)&0x0f)|(((GPIOC->IDR&0XFFFF)>>2)&0xF0);	//¶ÁÊý¾Ý
 						OV7670_RCK_H;
 						OV7670_RCK_L;
 						OV7670_RCK_H;
 						//LCD->LCD_RAM=GRAY_2_RGB565(color); 
-						if((j>=50&&j<130)&&(i>=0&&i<240))//100*100		//110   210    70    170    /////////220
+						if((j>=50&&j<130)&&(i>=1&&i<240))//100*100		//110   210    70    170    /////////220
 							{	
 								if(color>fz) 
 									color=0xfe;
@@ -353,19 +354,17 @@ void camera_refresh()
 			}		
 			
 		EXTI_ClearITPendingBit(EXTI_Line8);  
-		ov_sta=0;					
+		ov_sta=0;				
 	} 
 	
 }	
 void serial_data_postback()
 {
-
 	//$4WD,CSB120,PV8.3,GS214,LF1011,HW11,GM11#
 	float csbLen=0.0f, power; 
 	u16 gs=0, lf=0; 
 	u8 hw=0, gm=0;
-	int Ll1, Rr1;
-
+//	int Ll1, Rr1;
 	csbLen= bsp_getUltrasonicDistance0();
 	//csbLen =(int)Distance_test();
 	power = Get_Battery_Volotage();
@@ -383,11 +382,11 @@ void serial_data_postback()
 * Function       app_bluetooth_deal
 * @author        liusen
 * @date          2017.07.20    
-* @brief         
+* @brief       
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   
+* @par History  
 */
 void app_bluetooth_deal(void)
 {
@@ -395,18 +394,17 @@ void app_bluetooth_deal(void)
    	{
 		Protocol();
   	}
-
 	switch (g_modeSelect)
 	{
 		case 1: break; 								
-		case 2: ; break; 			
+		case 2: ; break; 		
 		case 3: ;app_ultrasonic_mode0();  break;  	
-		case 4: bsp_Colorful_Control(1, 1, 1); break;  
-	//	case 5: app_LightSeeking(); break;  		
-	//	case 6: app_IRFollow(); break;  			
+		case 4: bsp_Colorful_Control(1, 1, 1); break; 
+	//	case 5: app_LightSeeking(); break;  	
+	//	case 6: app_IRFollow(); break;  		
 		default:break;
 	}
-
+	
 	if (g_modeSelect == 0 && g_Boolfire == 0)
 	{
 		if (g_count >= 100000)

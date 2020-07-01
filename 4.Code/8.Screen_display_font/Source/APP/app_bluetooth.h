@@ -23,7 +23,7 @@
 #include "delay.h"
 
 extern int g_modeSelect;  
-extern u8 g_Boolfire;	   
+extern u8 g_Boolfire;	    
 
 
 void app_bluetooth_deal(void);

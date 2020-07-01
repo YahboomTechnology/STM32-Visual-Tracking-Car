@@ -8,7 +8,7 @@
 #define 	TYPE16X16		2
 #define 	TYPE6X8			3
 
-				   
+//---------------------------  					   
 
 #define LCD_SCL_CLR()	GPIO_ResetBits(GPIOB,GPIO_Pin_6)
 #define LCD_SCL_SET()	GPIO_SetBits(GPIOB,GPIO_Pin_6)
@@ -22,7 +22,6 @@
 #define LCD_DC_CLR()	GPIO_ResetBits(GPIOC,GPIO_Pin_9)
 #define LCD_DC_SET()	GPIO_SetBits(GPIOC,GPIO_Pin_9)
 
-//CS pin need to connect to GND
 
 
 extern void LCD_Init0(void);

@@ -4,7 +4,7 @@
 * @author       liusen
 * @version      V1.0
 * @date         2015.01.03
-* @brief        gpio
+* @brief        
 * @details      
 * @par History  
 *                 
@@ -21,7 +21,7 @@ void LineWalking_GPIO_Init(void);
 void IRAvoid_GPIO_Init(void);
 void LightSeeking_GPIO_Init(void);
 void Ultrasonic_GPIO_Init(void);
-void Start_init();
+void Start_init(void);
 
 #endif
 

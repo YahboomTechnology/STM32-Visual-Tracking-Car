@@ -17,12 +17,12 @@
 #include "OLED.h"
 
 
-void ADC_GPIO_Init()
+void ADC_GPIO_Init(void)
 {
 
 	GPIO_InitTypeDef GPIO_InitStructure;
-		
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC , ENABLE ); 
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC , ENABLE );
 
 	GPIO_InitStructure.GPIO_Pin =GPIO_Pin_4;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
@@ -33,7 +33,6 @@ void ADC_GPIO_Init()
 * Function       Adc_Init
 * @author        liusen
 * @date          2017.08.17    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -56,7 +55,7 @@ void Adc_Init(void)
 	ADC_InitStructure.ADC_ContinuousConvMode = DISABLE; 
 	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right; 
-	ADC_InitStructure.ADC_NbrOfChannel = 1;
+	ADC_InitStructure.ADC_NbrOfChannel = 1; 
 	ADC_Init(ADC1, &ADC_InitStructure); 
 	ADC_Cmd(ADC1, ENABLE); 
 	ADC_ResetCalibration(ADC1); 
@@ -68,8 +67,6 @@ void Adc_Init(void)
 * Function       Get_Adc
 * @author        liusen
 * @date          2017.08.17     
-* @brief         
-* @param[in]     ch: 0~3
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -77,10 +74,10 @@ void Adc_Init(void)
 
 static u16 Get_Adc(u8 ch)
 {
-	
+
 	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_239Cycles5 );
-	
-	ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+
+	ADC_SoftwareStartConvCmd(ADC1, ENABLE); 
 	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC ));
 	return ADC_GetConversionValue(ADC1); 
 }
@@ -89,8 +86,6 @@ static u16 Get_Adc(u8 ch)
 * Function       Get_Adc_Average
 * @author        liusen
 * @date          2017.08.17    
-* @brief         
-* @param[in]     ch: 0~3 ; times
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -112,8 +107,6 @@ static u16 Get_Adc_Average(u8 ch, u8 times)
 * Function       Get_Measure_Volotage
 * @author        liusen
 * @date          2017.08.17  
-* @brief         
-* @param[in]     ch:0~3 ; times
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -132,7 +125,6 @@ static float Get_Measure_Volotage(void)
 * Function       Get_Battery_Volotage
 * @author        liusen
 * @date          2017.08.18    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        float 
@@ -143,7 +135,7 @@ float Get_Battery_Volotage(void)
 	float temp;
 	ADC_GPIO_Init();
 	temp = Get_Measure_Volotage();
-	temp = temp * 4.00; 
+	temp = temp * 4.00; //temp*(5+5)/5;  
 	return temp;
 }
 
@@ -151,7 +143,6 @@ float Get_Battery_Volotage(void)
 * Function       Get_Battery_Volotage_show
 * @author        liusen
 * @date          2017.08.18    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        float 

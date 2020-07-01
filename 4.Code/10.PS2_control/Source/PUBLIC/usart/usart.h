@@ -3,8 +3,8 @@
 #include "stdio.h"	
 #include "sys.h" 
 
-#define USART_REC_LEN  			200  	
-#define EN_USART1_RX 			1		
+#define USART_REC_LEN  			200  
+#define EN_USART1_RX 			1	
 	  	
 extern u8  USART_RX_BUF[USART_REC_LEN]; 
 extern u16 USART_RX_STA;         		

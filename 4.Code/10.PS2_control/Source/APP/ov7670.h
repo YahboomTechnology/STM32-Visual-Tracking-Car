@@ -29,7 +29,7 @@ typedef struct{
 
 
 	  
-extern const u8 ov7670_init_reg_tbl_RGB565[171][2];		
+extern const u8 ov7670_init_reg_tbl_RGB565[171][2];	
 extern const u8 ov7670_init_reg_tbl_YUV[174][2];		
 
 extern OV7670_CONFIG ov7670_config;

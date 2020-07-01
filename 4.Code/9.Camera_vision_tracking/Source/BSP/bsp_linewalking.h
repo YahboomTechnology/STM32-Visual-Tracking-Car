@@ -12,7 +12,6 @@
 */
 
 
-
 #ifndef __BSP_LINEWALKING_H__
 #define __BSP_LINEWALKING_H__	
 

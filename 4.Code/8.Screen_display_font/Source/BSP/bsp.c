@@ -22,9 +22,9 @@
 #include "stdio.h"
 
 
-extern void NVIC_Configuration(); 
-void LCD_Init0();
-void GPIO_UserInit();
+extern void NVIC_Configuration(void); 
+void LCD_Init0(void);
+void GPIO_UserInit(void);
 
 
 /**
@@ -35,21 +35,21 @@ void GPIO_UserInit();
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void bsp_init(void)
 {
 	Start_init();
-	MOTOR_GPIO_Init();  				
-	Servo_GPIO_Init();				    
+	MOTOR_GPIO_Init();  			
+	Servo_GPIO_Init();				  
 	TIM1_Int_Init(9, 72);				
-	Ultrasonic_GPIO_Init();				
+	Ultrasonic_GPIO_Init();			
 	bsp_Ultrasonic_Timer2_Init();		
 	Uart1_init(115200);					
-	Angle_J1 = 79;					
+	Angle_J1 = 79;						
 	delay_init();
-	NVIC_Configuration(); 	   
-	while(OV7670_Init());		  
+	NVIC_Configuration(); 	 
+	while(OV7670_Init());
 	EXTI8_Init();						
   OV7670_CS=0;			
 	config_ov7670_OutPut(20,60,320,240,1);

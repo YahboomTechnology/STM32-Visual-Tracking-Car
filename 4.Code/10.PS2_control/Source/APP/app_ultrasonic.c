@@ -28,7 +28,7 @@ float Distance_test(void);
 * Function       app_ultrasonic_mode
 * @author        liusen
 * @date          2017.07.20    
-* @brief         
+* @brief        
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -56,7 +56,6 @@ void app_ultrasonic_modeshow(void)
 * Function       app_ultrasonic_mode
 * @author        liusen
 * @date          2017.07.20    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -70,7 +69,7 @@ void app_ultrasonic_mode0(void)
 	
 	//printf("CSB:%d \r\n", Len);  	
 
-	if(Len < 25)//This data is distance to obstacle ,can be set according to the actual situation 
+	if(Len < 25)
     { 
 			Angle_J1 = 130;
 			MiniCar_Run(300);
@@ -79,7 +78,7 @@ void app_ultrasonic_mode0(void)
     }
   else 
 		{
-		MiniCar_Run(300); //no obstacle ,advance	
+		MiniCar_Run(300); 
 		}
 	
 }
@@ -88,11 +87,10 @@ void app_ultrasonic_mode0(void)
 * Function       app_ultrasonic_servo_mode
 * @author        liusen
 * @date          2017.07.20    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void app_ultrasonic_servo_modeaaaa(void)
 {
@@ -138,14 +136,14 @@ void app_ultrasonic_servo_modeaaaa(void)
     }
     else if(Len > 30)
     {
-	//	Car_Run(5000); 	  
+	//	Car_Run(5000); 	 
     }
 }
 void app_ultrasonic_mode(void)
 {
-	int speeda=4500;
+//	int speeda=4500;
 	int Len = 0;
-	int LeftDistance = 0, RightDistance = 0;
+//	int LeftDistance = 0, RightDistance = 0;
 
 	Len = (u16)Distance_test();
 
@@ -159,13 +157,57 @@ void app_ultrasonic_mode(void)
 			delay_ms(6000); 
 			delay_ms(6000); 
 		//	Car_Stop();
-			Angle_J1 = 120;		
+			Angle_J1 = 120;	
 		//	Car_Run(speeda); 
 			delay_ms(6000); 
 			delay_ms(6000); 
-			delay_ms(6000);
-			Angle_J1 = 90;		
+			delay_ms(6000); 
+			Angle_J1 = 90;	
+			/*Car_Stop();
 			
+			Angle_J1 = 120;		
+			delay_ms(500);
+			Len = Distance_test();			
+			LeftDistance = Len;	  
+		 
+			Angle_J1 = 55;	
+			delay_ms(500); 
+			Len = Distance_test();					
+			RightDistance = Len;
+
+
+			Angle_J1 = 90;	
+			delay_ms(500); 
+
+			if((LeftDistance < 35 ) &&( RightDistance < 35 ))
+			{
+			//	Car_SpinRight(3000, 2000);
+				Angle_J1 = 120;
+				Car_Back(speeda);
+				delay_ms(2500);
+				Angle_J1 = 60;
+				Car_Run(speeda); 
+				delay_ms(3000); 
+				Angle_J1 = 90;
+				Car_Run(speeda);
+				delay_ms(500); 
+			}
+			else if(LeftDistance >= RightDistance)
+			{      
+			//	Car_SpinLeft(3000, 2000);
+				Angle_J1 = 120;
+				Car_Run(speeda); 
+				delay_ms(5000); 
+				Angle_J1 = 90;
+			}
+			else
+			{
+			//	Car_SpinRight(3000, 2000);
+				Angle_J1 = 60;
+				Car_Run(speeda); 
+				delay_ms(5000); 
+				Angle_J1 = 90;
+			}*/
     }
     else if(Len > 40)
     {

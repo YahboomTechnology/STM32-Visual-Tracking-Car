@@ -4,7 +4,6 @@
 * @author       liusen
 * @version      V1.0
 * @date         2017.08.18
-* @brief        
 * @details      
 * @par History  
 *                 
@@ -18,11 +17,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+void bsp_Colorful_Control(int v_RedOnOff, int v_GreenOnOff, int v_BlueOnOff);
 u8 ProtocolString[80] = {0};
 int CarSpeedControl = 200;
-
-
 
 
 enum {
@@ -44,14 +41,12 @@ enum {
 #define 	stop_car    '0'
 
 
-int g_CarState = enSTOP; 
+int g_CarState = enSTOP;
 
 /**
 * Function       StringFind
 * @author        liusen
 * @date          2017.08.18    
-* @brief         
-* @param[in]     pSrc:Source string; pDst:Finded string v_iStartPos:The starting position of the source string
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -82,7 +77,6 @@ int StringFind(const char *pSrc, const char *pDst, int v_iStartPos)
 * Function       ProtocolCpyData
 * @author        liusen
 * @date          2017.08.18    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -98,7 +92,6 @@ void ProtocolCpyData(void)
 * Function       Protocol
 * @author        liusen
 * @date          2017.08.18    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -107,7 +100,6 @@ void ProtocolCpyData(void)
 void Protocol(void)
 {
 	ProtocolCpyData();
-
 
 	if(StringFind((const char *)ProtocolString, (const char *)"MODE", 0) > 0 
 		&& StringFind((const char *)ProtocolString, (const char *)"4WD", 0) > 0)
@@ -141,7 +133,6 @@ void Protocol(void)
 	    return;
   	}
 
-
 	if (StringFind((const char *)ProtocolString, (const char *)"PTZ", 0) > 0)
 	{
 		int m_kp, i, ii;
@@ -153,7 +144,7 @@ void Protocol(void)
 			char m_skp[5] = {0};
 			memcpy(m_skp, ProtocolString + i + 3, ii - i -3);
 			
-			m_kp = atoi(m_skp);       
+			m_kp = atoi(m_skp);        
 
 			Angle_J1 = (180 - m_kp);
 
@@ -163,10 +154,10 @@ void Protocol(void)
 		}
   }
 	
-
+//	//Из:$1,0,0,0,0,0,0,0,0,0#    
 	if (StringFind((const char *)ProtocolString, (const char *)"4WD", 0) == -1)
 	{
-
+//		
 //		if (ProtocolString[3] == '1')      
 //		{
 //			g_CarState = enTLEFT;

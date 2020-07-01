@@ -24,8 +24,6 @@ u8 ProtocolString[80] = {0};
 int CarSpeedControl = 200;
 
 
-
-
 enum {
 
   enSTOP = 0,
@@ -51,8 +49,6 @@ int g_CarState = enSTOP;
 * Function       StringFind
 * @author        liusen
 * @date          2017.08.18    
-* @brief         
-* @param[in]     pSrc:Source string; pDst:Finded string v_iStartPos:The starting position of the source string
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -83,7 +79,6 @@ int StringFind(const char *pSrc, const char *pDst, int v_iStartPos)
 * Function       ProtocolCpyData
 * @author        liusen
 * @date          2017.08.18    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -99,7 +94,6 @@ void ProtocolCpyData(void)
 * Function       Protocol
 * @author        liusen
 * @date          2017.08.18    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -108,6 +102,7 @@ void ProtocolCpyData(void)
 void Protocol(void)
 {
 	ProtocolCpyData();
+
 
 	if(StringFind((const char *)ProtocolString, (const char *)"MODE", 0) > 0 
 		&& StringFind((const char *)ProtocolString, (const char *)"4WD", 0) > 0)
@@ -141,18 +136,19 @@ void Protocol(void)
 	    return;
   	}
 
+
 	if (StringFind((const char *)ProtocolString, (const char *)"PTZ", 0) > 0)
 	{
 		int m_kp, i, ii;
 
-		i = StringFind((const char *)ProtocolString, (const char *)"PTZ", 0); //寻找以PTZ开头,#结束中间的字符
+		i = StringFind((const char *)ProtocolString, (const char *)"PTZ", 0); 
 		ii = StringFind((const char *)ProtocolString, (const char *)"#", i);
 		if (ii > i)
 		{
 			char m_skp[5] = {0};
 			memcpy(m_skp, ProtocolString + i + 3, ii - i -3);
 			
-			m_kp = atoi(m_skp);      
+			m_kp = atoi(m_skp);        
 
 			Angle_J1 = (180 - m_kp);
 
@@ -162,10 +158,11 @@ void Protocol(void)
 		}
   }
 	
+
 	if (StringFind((const char *)ProtocolString, (const char *)"4WD", 0) == -1)
 	{
-
-//		if (ProtocolString[3] == '1')      
+//		
+//		if (ProtocolString[3] == '1')     
 //		{
 //			g_CarState = enTLEFT;
 //		}
@@ -179,6 +176,7 @@ void Protocol(void)
 //		}
 
 
+		
 		if (ProtocolString[7] == '1')    
 		{
 			CarSpeedControl += 100;
@@ -196,23 +194,24 @@ void Protocol(void)
 			}
 		}
 
-		if (ProtocolString[13] == '1')
+	
+		if (ProtocolString[13] == '1')//White
 		{
 			bsp_Colorful_Control(1, 1, 1);
 		}
-		else if (ProtocolString[13] == '2')
+		else if (ProtocolString[13] == '2')//red
 		{
 			bsp_Colorful_Control(1, 0, 0);
 		}
-		else if (ProtocolString[13] == '3')
+		else if (ProtocolString[13] == '3')//green
 		{
 			bsp_Colorful_Control(0, 0, 1);
 		}
-		else if (ProtocolString[13] == '4') 
+		else if (ProtocolString[13] == '4') //blue
 		{
 			bsp_Colorful_Control(0, 1, 0);
 		}
-		else if (ProtocolString[13] == '8') 
+		else if (ProtocolString[13] == '8') //off
 		{
 			bsp_Colorful_Control(0, 0, 0);
 		}

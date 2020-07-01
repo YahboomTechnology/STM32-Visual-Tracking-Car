@@ -4,7 +4,7 @@
 * @author       john
 * @version      V1.0
 * @date         2018.10.17
-* @brief        
+* @brief        main function
 * @details      
 * @par History  
 *                 
@@ -28,16 +28,17 @@
 
 
 int nextblack;
-void camera_refresh();
-void  find_line();
-void dir();
-void special_line();
+void camera_refresh(void);
+void find_line(void);
+void dir(void);
+void special_line(void);
 int speed=0,run;
-extern void dis_play_image();
+extern void dis_play_image(void);
 
 
 int main(void)
 {	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+
 	bsp_init();
 	
 	while (1)

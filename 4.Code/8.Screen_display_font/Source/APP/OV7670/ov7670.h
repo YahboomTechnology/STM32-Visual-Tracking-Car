@@ -3,15 +3,15 @@
 #include "sys.h"
 #include "sccb.h"
 
-#define OV7670_VSYNC  	PAin(8)			//Synchronous signal detection IO
-#define OV7670_WRST		PBout(0)		  //Write pointer reset
-#define OV7670_WREN		PCout(7)		  //Write FIFO enable
-//#define OV7670_RCK		PBout(4)		//Read clock data
+#define OV7670_VSYNC  	PAin(8)			
+#define OV7670_WRST		PBout(0)		
+#define OV7670_WREN		PCout(7)		
+//#define OV7670_RCK		PBout(4)		
 #define OV7670_RCK_L  GPIOC->BRR  = GPIO_Pin_6
 #define OV7670_RCK_H  GPIOC->BSRR = GPIO_Pin_6
 
-#define OV7670_RRST		PCout(5)  		//Read pointer reset
-#define OV7670_CS		PBout(1)  		  //Chip select signal(OE)
+#define OV7670_RRST		PCout(5)  		
+#define OV7670_CS		PBout(1)  		
 															  					 
 #define OV7670_DATA   GPIO_ReadInputData(GPIOC,0x00FF) 					
 #define GRAY_2_RGB565(gray)             ((u16)((((u8)(gray)>>3)<<11)|(((u8)(gray)>>2)<<5)|((u8)(gray)>>3)))
@@ -21,8 +21,8 @@
 typedef struct{
 	u16 xsta;
 	u16 ysta;
-	u16 width;		//The width of the image displayed by the camera
-	u16 height;		//The height of the image displayed by the camera
+	u16 width;		
+	u16 height;		
 	u8 mode;
 }OV7670_CONFIG;
 

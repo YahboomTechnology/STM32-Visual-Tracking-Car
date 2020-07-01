@@ -4,7 +4,6 @@
 * @author       liusen
 * @version      V1.0
 * @date         2015.01.03
-* @brief        
 * @details      
 * @par History  
 *                 
@@ -19,7 +18,7 @@
 
 void MiniCar_Run(int Speed0);
 void MiniCar_Back(int Speed0);
-void MiniCar_Stop();
+void MiniCar_Stop(void);
 
 void Car_Run(int Speed);
 void Car_Back(int Speed);

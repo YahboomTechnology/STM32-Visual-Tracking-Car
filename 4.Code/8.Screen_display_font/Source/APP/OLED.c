@@ -1,6 +1,4 @@
-/*OLED Underlying driver
-*@Fractional resolution:128*64
-*Storage format
+/*OLED
 *[0]0 1 2 3 ... 127	
 *[1]0 1 2 3 ... 127	
 *[2]0 1 2 3 ... 127	
@@ -128,7 +126,7 @@ const u8 F16x16_Idx[] =
 {
 	"测距离周长面积度高坡亩仪搜索卫星大小查记录删除系统值设单价公顷元询每电池压经纬°㎡型号版本剩余空间返回退出北亚博智能科技创客教育"
 };
-//Display Chinese characters
+
 const u8 F16x16[] = 
 {
 
@@ -332,7 +330,6 @@ const u8 F16x16[] =
 
 };
 //======================================================
-//12864 Underlying driver[8x16] Font library
 // !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
 //======================================================
 const u8 F8X16[]=
@@ -435,7 +432,6 @@ const u8 F8X16[]=
 
 };
 
-/* Display a solid diamond icon on a 16*16 dot matrix*/
 const u8 nonside[] =
 {
 	0x00,0x00,0x80,0xC0,0xE0,0xF0,0xF8,0xFC,0xF8,0xF0,0xE0,0xC0,0x80,0x00,0x00,0x00,
@@ -482,10 +478,8 @@ void LCD_WrCmd(u8 cmd)
 	//LCD_CS=1;
 }
 
-/*The Y-axis is progressively in 8 grids, 
-*and the Y-axis is 0-63, which can only be displayed in multiples of 8 grids, 
-*since the determinant can only be performed in 8 bytes.
-*/
+
+
 
 void LCD_Set_Pos(u8 x, u8 y)
 { 
@@ -494,7 +488,7 @@ void LCD_Set_Pos(u8 x, u8 y)
   LCD_WrCmd((x&0x0f)|0x01); 
 } 
 
-void LCD_Set_Pos1(u8 x, u8 y)//draw point
+void LCD_Set_Pos1(u8 x, u8 y)
 { 
   LCD_WrCmd(0xb0+y);
   LCD_WrCmd(((x&0xf0)>>4)|0x10);
@@ -525,7 +519,7 @@ void LCD_CLS(void)
 			LCD_WrDat(0);
 	}
 }
-//clear a row 0-63
+
 void LCD_CLS_y(char y)
 {
 	u8 x;	
@@ -540,7 +534,7 @@ void LCD_CLS_y(char y)
 	
 }
 
-//clear a part on the a row :y=0~63
+
 void LCD_CLS_line_area(u8 start_x,u8 start_y,u8 width)
 {
 	u8 x;	
@@ -573,7 +567,7 @@ void LCD_Init0(void)
   //DDRA=0XFF;
   
 	LCD_SCL_SET();
-	//LCD_CS=1;	
+	//LCD_CS=1;	//
 	
 	LCD_RST_CLR();
 	LCD_DLY_ms(50);
@@ -585,8 +579,8 @@ void LCD_Init0(void)
   LCD_WrCmd(0x40);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
   LCD_WrCmd(0x81);//--set contrast control register
   LCD_WrCmd(0xcf); // Set SEG Output Current Brightness
-  LCD_WrCmd(0xa1);//--Set SEG/Column Mapping    0xa0 reverse left ang right ,0xal is normal
-  LCD_WrCmd(0xc8);//Set COM/Row Scan Direction  0xc0 reverse left and right, oac8 is normal
+  LCD_WrCmd(0xa1);//--Set SEG/Column Mapping     
+  LCD_WrCmd(0xc8);//Set COM/Row Scan Direction   
   LCD_WrCmd(0xa6);//--set normal display
   LCD_WrCmd(0xa8);//--set multiplex ratio(1 to 64)
   LCD_WrCmd(0x3f);//--1/64 duty
@@ -612,10 +606,7 @@ void LCD_Init0(void)
 	
 } 
 //==============================================================
-//Name of function: void LCD_PutPixel(u8 x,u8 y)
-//Functional description: draw a point(x,y).
-//Parameter: True coordinate value(x,y).x:0~127;y:0~64
-//return :no
+
 //==============================================================
 void LCD_PutPixel(u8 x,u8 y)
 {
@@ -629,10 +620,7 @@ void LCD_PutPixel(u8 x,u8 y)
 	LCD_WrDat(data1); 	 	
 }
 //==============================================================
-//Name of function: void LCD_Put_Column(u8 x,u8 y,u8 data)
-//Functional description: Operation a column display, a column full display 0xff, clear a column 0x00.
-//Parameter: True coordinate value(x,y).x:0~127;y:0~64
-//return :no
+
 //==============================================================
 void LCD_Put_Column(u8 x,u8 y,u8 data)
 {	
@@ -644,12 +632,7 @@ void LCD_Put_Column(u8 x,u8 y,u8 data)
 
 
 //==============================================================
-//Name of function: void LCD_Rectangle(u8 x1,u8 y1,
-//                   u8 x2,u8 y2,u8 color,u8 gif)
-//Functional description: Draw a solid rectangle
-//Parameter:Upper left corner coordinates(x1,y1),lower right corner coordinates(x2,y2)
-//      x1,x2:0~127,y1,y2:0~63
-//return :no
+
 //==============================================================
 void LCD_Rectangle(u8 x1,u8 y1,u8 x2,u8 y2,u8 gif)
 {
@@ -670,11 +653,8 @@ void LCD_Rectangle(u8 x1,u8 y1,u8 x2,u8 y2,u8 gif)
 	
 }  
 //==============================================================
-//name of function: LCD_P8x16Str(u8 x,u8 y,u8 *p)
-//Functional description:Write a standard set of ASCII
-//Parameter: Position of display.y:0~7,need to display character string
-//return :no
-//==============================================================    
+
+//==============================================================  
 void LCD_P6x8Str(u8 x,u8 y,u8 *ch,const u8 *F6x8)
 {
 	u8 c=0,i=0,j=0;
@@ -697,11 +677,8 @@ void LCD_P6x8Str(u8 x,u8 y,u8 *ch,const u8 *F6x8)
 	}
 }
 //==============================================================
-//name of function: LCD_P8x16Str(u8 x,u8 y,u8 *p)
-//Functional description:Write a standard set of ASCII
-//Parameter: Position of display.y:0~63,need to display character string
-//return :no
-//==============================================================   
+
+//==============================================================  
 void LCD_P8x16Str(u8 x,u8 y,u8 *ch,const u8 *F8x16)
 {
   u8 c=0,i=0,j=0;
@@ -728,7 +705,7 @@ void LCD_P8x16Str(u8 x,u8 y,u8 *ch,const u8 *F8x16)
   	j++;
   }
 }
-//Output Chinese character string
+
 void LCD_P14x16Str(u8 x,u8 y,u8 ch[],const u8 *F14x16_Idx,const u8 *F14x16)
 {
 	u8 wm=0,ii = 0;
@@ -756,7 +733,7 @@ void LCD_P14x16Str(u8 x,u8 y,u8 ch[],const u8 *F14x16_Idx,const u8 *F14x16)
 			y++;
 		}
 	  	LCD_Set_Pos(x , y); 
-	  	if(adder != 1)//display chinese characters						
+	  	if(adder != 1)// 					
 	  	{
 	  		LCD_Set_Pos(x , y);
 	  		for(wm = 0;wm < 14;wm++)               
@@ -771,7 +748,7 @@ void LCD_P14x16Str(u8 x,u8 y,u8 ch[],const u8 *F14x16_Idx,const u8 *F14x16)
 	  			adder += 1;
 	  		}   		
 	  	}
-	  	else			  //display blank characters		
+	  	else			  //	
 	  	{
 	  		ii += 1;
 	      	LCD_Set_Pos(x,y);
@@ -789,7 +766,7 @@ void LCD_P14x16Str(u8 x,u8 y,u8 ch[],const u8 *F14x16_Idx,const u8 *F14x16)
 	  	ii += 2;
 	}
 }
-//  output chinese characters
+
 void LCD_P16x16Str(u8 x,u8 y,u8 *ch,const u8 *F16x16_Idx,const u8 *F16x16)
 {
 	u8 wm=0,ii = 0;
@@ -813,7 +790,7 @@ void LCD_P16x16Str(u8 x,u8 y,u8 *ch,const u8 *F16x16_Idx,const u8 *F16x16)
   	}
   	if(x>118){x=0;y++;}
   	LCD_Set_Pos(x , y); 
-  	if(adder != 1)//display chinese characters					
+  	if(adder != 1)// 			
   	{
   		LCD_Set_Pos(x , y);
   		for(wm = 0;wm < 16;wm++)               
@@ -828,7 +805,7 @@ void LCD_P16x16Str(u8 x,u8 y,u8 *ch,const u8 *F16x16_Idx,const u8 *F16x16)
   			adder += 1;
   		}   		
   	}
-  	else			 //display blank characters			
+  	else			  
   	{
   		ii += 1;
       	LCD_Set_Pos(x,y);
@@ -849,38 +826,33 @@ void LCD_P16x16Str(u8 x,u8 y,u8 *ch,const u8 *F16x16_Idx,const u8 *F16x16)
 
 
 
-/*Output mixed characters of Chinese characters and characters
-*The Y-axis is progressively in 8 grids, 
-*and the Y-axis is 0-63, which can only be displayed in multiples of 8 grids, 
-*since the determinant can only be performed in 8 bytes.
-*/
 void LCD_Print(u8 x, u8 y, u8 *ch,u8 char_size, u8 ascii_size)
 {
 	u8 ch2[3];
 	u8 ii=0;        
 	while(*(ch+ii) != '\0')
 	{
-		if(*(ch+ii) > 127)//Greater than 127 is Chinese,smaller than 127 is ASCII
+		if(*(ch+ii) > 127)
 		{
 			ch2[0] = *(ch+ii);
 	 		ch2[1] = *(ch+ii+1);
-			ch2[2] = '\0';			//Chinese Letters occupy two byte
-			LCD_P16x16Str(x , y, ch2,F16x16_Idx,F16x16);	//display Chinese character
+			ch2[2] = '\0';			
+			LCD_P16x16Str(x , y, ch2,F16x16_Idx,F16x16);	
 			x += 16;
 			ii += 2;
 		}
 		else
 		{
 			ch2[0] = *(ch+ii);	
-			ch2[1] = '\0';			//Letters occupy one byte
+			ch2[1] = '\0';			
 			if(TYPE8X16==ascii_size)
 			{
-				LCD_P8x16Str(x , y ,ch2,F8X16);	//display letter
+				LCD_P8x16Str(x , y ,ch2,F8X16);	
 				x += 8;
 			}
 			else if(TYPE6X8==ascii_size)
 			{
-				LCD_P6x8Str(x , y ,ch2,F6x8);	//display letter
+				LCD_P6x8Str(x , y ,ch2,F6x8);	
 				x += 6;
 			}
 			
@@ -890,10 +862,7 @@ void LCD_Print(u8 x, u8 y, u8 *ch,u8 char_size, u8 ascii_size)
 } 
 
 //==============================================================
-//name of function: void Draw BMP(u8 x,u8 y)
-//Functional description: display BMP picture 128*64
-//Parameter: Starting point coordinates(x,y), x:0~127;y:0~63.
-//return :no
+
 //==============================================================
 void Draw_BMP(u8 x,u8 y,const u8 *bmp)
 { 	

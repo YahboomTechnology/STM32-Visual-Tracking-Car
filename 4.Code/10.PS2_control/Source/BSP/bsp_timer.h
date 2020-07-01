@@ -17,7 +17,7 @@
 #include "stm32f10x.h"
 
 
-extern long g_count; 
+extern long g_count;
 
 void TIM1_Int_Init(u16 arr,u16 psc);
 

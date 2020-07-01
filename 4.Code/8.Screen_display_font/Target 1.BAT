@@ -1,4 +1,4 @@
-SET PATH=C:\Keil_v5\ARM\ARMCC\Bin;D:\Program Files (x86)\NetSarang\Xlpd 6\;D:\Program Files (x86)\NetSarang\Xshell 6\;D:\Program Files (x86)\NetSarang\Xmanager 6\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\Program Files\TortoiseSVN\bin;D:\Program Files\Mu\bin;C:\Program Files\TortoiseGit\bin;C:\Program Files\Git LFS;C:\Program Files\Git\cmd;C:\Program Files (x86)\IDM Computer Solutions\UltraEdit;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\Program Files\TortoiseSVN\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;C:\Makecode\resources\app\pxt\nodejs\;D:\Anaconda3;D:\Anaconda3\Scripts;D:\Anaconda3\Library\bin;;C:\Program Files (x86)\SSH Communications Security\SSH Secure Shell
+SET PATH=C:\Keil_v5\ARM\ARMCC\Bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\libnvvp;C:\Program Files (x86)\NetSarang\Xlpd 6\;C:\Program Files (x86)\NetSarang\Xshell 6\;C:\Program Files (x86)\NetSarang\Xmanager 6\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\cmd;C:\Program Files\TortoiseGit\bin;C:\Program Files\dotnet\;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v8.0\libnvvp;C:\Program Files (x86)\NetSarang\Xlpd 6\;C:\Program Files (x86)\NetSarang\Xshell 6\;C:\Program Files (x86)\NetSarang\Xmanager 6\;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\cmd;C:\Program Files\TortoiseGit\bin;D:\software\MU\bin;C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps;;C:\Makecode\resources\app\pxt\nodejs\;
 SET CPU_TYPE=STM32F103RC
 SET CPU_VENDOR=STMicroelectronics
 SET UV2_TARGET=Target 1
@@ -55,5 +55,5 @@ SET CPU_CLOCK=0x00B71B00
 "C:\Keil_v5\ARM\ARMCC\Bin\ArmCC" --Via ".\output\stm32f10x_tim.__i"
 "C:\Keil_v5\ARM\ARMCC\Bin\ArmCC" --Via ".\output\stm32f10x_usart.__i"
 "C:\Keil_v5\ARM\ARMCC\Bin\ArmCC" --Via ".\output\stm32f10x_wwdg.__i"
-"C:\Keil_v5\ARM\ARMCC\Bin\ArmLink" --Via ".\output\Screen display font.lnp"
-"C:\Keil_v5\ARM\ARMCC\Bin\fromelf.exe" ".\output\Screen display font.axf" --i32combined --output ".\output\Screen display font.hex"
+"C:\Keil_v5\ARM\ARMCC\Bin\ArmLink" --Via ".\output\Screen_display_font.lnp"
+"C:\Keil_v5\ARM\ARMCC\Bin\fromelf.exe" ".\output\Screen_display_font.axf" --i32combined --output ".\output\Screen_display_font.hex"

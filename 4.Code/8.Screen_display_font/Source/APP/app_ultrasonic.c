@@ -6,7 +6,7 @@
 * @date         2015.01.03
 * @brief        
 * @details      
-* @par History  no
+* @par History  
 *                 
 * version:	liusen_20170717
 */
@@ -31,7 +31,7 @@ float Distance_test(void);
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void app_ultrasonic_mode0(void)
 {
@@ -41,7 +41,7 @@ void app_ultrasonic_mode0(void)
 	
 	//printf("CSB:%d \r\n", Len);  	
 
-	if(Len < 25)
+	if(Len < 25) 
     { 
 			Angle_J1 = 130;
 			MiniCar_Run(300);

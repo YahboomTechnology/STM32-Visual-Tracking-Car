@@ -1,0 +1,6 @@
+-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I.\Source\CMSIS -I.\Source\FWlib\inc -I.\Source\FWlib\src -I.\Source\BSP -I.\Source\APP -I.\Source\PUBLIC\delay -I.\Source\PUBLIC\sys -I.\Source\PUBLIC\usart -I.\Source\Protocol -I.\Source\APP\EXTI -I.\Source\APP\LCD -I.\Source\APP\OV7670 -I.\Source\APP\LED -I.\Source\APP\OLED
+-I F:\15.STM32视觉巡线小车\5.程序源码\11.Bluetooth_control\RTE
+-I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include
+-I Device\Include
+-D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER
+-o .\output\stm32f10x_flash.o --omf_browse .\output\stm32f10x_flash.crf --depend .\output\stm32f10x_flash.d "Source\FWlib\src\stm32f10x_flash.c"

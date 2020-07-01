@@ -4,7 +4,6 @@
 * @author       liusen
 * @version      V1.0
 * @date         2017.07.17
-* @brief        
 * @details      
 * @par History  
 *                 
@@ -28,5 +27,5 @@ int position = 0;
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History  no
+* @par History   
 */

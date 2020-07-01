@@ -4,14 +4,19 @@
 * @author       liusen
 * @version      V1.0
 * @date         2015.01.03
-* @brief       
+* @brief        
 * @details      
 * @par History  
 *                 
 * version:	liusen_20170717
 */
 
+/*
 
+	From the back of the car looking forward: left to right line sensor sequence is
+L1 L2 |black line|  R1  R2  Corresponding schematic diagram  |IN2 IN1| black line IN3 IN4
+
+*/
 
 #ifndef __BSP_LINEWALKING_H__
 #define __BSP_LINEWALKING_H__	

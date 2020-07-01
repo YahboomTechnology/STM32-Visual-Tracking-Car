@@ -6,74 +6,52 @@
 #include "delay.h"	   
 
 				 
-//Brush color and back color of LCD
 u16 POINT_COLOR=0x0000;	
 u16 BACK_COLOR=0xFFFF;  
 
 
-// Default is  Vertical screen
 _lcd_dev lcddev;
 	
 		   
-//Write register function
-//regval:Register value
+
 void LCD_WR_REG(u16 regval)
 { 
-	LCD->LCD_REG=regval;//Write the register number to be written
+	LCD->LCD_REG=regval;
 }
 
-//Write lcd data
-//data: The value to be written
 void LCD_WR_DATA(u16 data)
 {										    	   
 	LCD->LCD_RAM=data;		 
 }
 
-//Read LCD data
-//Return :Read value
 u16 LCD_RD_DATA(void)
 {										    	   
 	return LCD->LCD_RAM;		 
 }					   
 
-
-//Read register function
-//LCD_Reg:Register address
-//LCD_RegValue:The value to be written
 void LCD_WriteReg(u8 LCD_Reg, u16 LCD_RegValue)
 {	
-	LCD->LCD_REG = LCD_Reg;		//Write the register number to be written
-	LCD->LCD_RAM = LCD_RegValue;   		 
-}
+	LCD->LCD_REG = LCD_Reg;		
+	LCD->LCD_RAM = LCD_RegValue; 		 
+}	   
 
-//Read register 
-//LCD_Reg:Register address
-//Return :Read value
 u16 LCD_ReadReg(u8 LCD_Reg)
 {										   
 	LCD_WR_REG(LCD_Reg);		
 	delay_us(5);		  
-	return LCD_RD_DATA();		
+	return LCD_RD_DATA();	
 }   
 
-
-//Star write GRAM
 void LCD_WriteRAM_Prepare(void)
 {
  	LCD->LCD_REG=lcddev.wramcmd;	  
 }	 
 
-//LCD write GRAM
-//RGB_Code:color value
 void LCD_WriteRAM(u16 RGB_Code)
 {							    
 	LCD->LCD_RAM = RGB_Code;
 }
 
-//The data read from the ILI93xx is in the GBR format,
-//but the format we write is RGB, which is converted by this function.
-//c:GBR format color
-//Return :RGB format color
 u16 LCD_BGR2RGB(u16 c)
 {
 	u16  r,g,b,rgb;   
@@ -83,20 +61,18 @@ u16 LCD_BGR2RGB(u16 c)
 	rgb=(b<<11)+(g<<5)+(r<<0);		 
 	return(rgb);
 } 
-//Need to be set when mdk-O1 time optimization
+
 void opt_delay(u8 i)
 {
 	while(i--);
 }
-//Read the color value of a point
-//x,y:coordinate
-//Return: thr point color
+
 u16 LCD_ReadPoint(u16 x,u16 y)
 {
  	u16 r=0,g=0,b=0;
-	if(x>=lcddev.width||y>=lcddev.height)return 0;	// Return directly beyond the scope	   
+	if(x>=lcddev.width||y>=lcddev.height)return 0;	
 	LCD_SetCursor(x,y);	    
-	if(lcddev.id==0X9341||lcddev.id==0X6804)LCD_WR_REG(0X2E);//9341/6804 Send GRAM commod
+	if(lcddev.id==0X9341||lcddev.id==0X6804)LCD_WR_REG(0X2E);
 	else LCD_WR_REG(R34);      		 			
  	if(lcddev.id==0X9320)opt_delay(2);				  
 	if(LCD->LCD_RAM)r=0;							//dummy Read	   
@@ -143,7 +119,7 @@ void LCD_SetCursor(u16 Xpos, u16 Ypos)
 		LCD_WriteReg(lcddev.setycmd, Ypos);
 	}	 
 } 		 
-   
+  	   
 void LCD_Scan_Dir(u8 dir)
 {
 	u16 regval=0;
@@ -167,7 +143,7 @@ void LCD_Scan_Dir(u8 dir)
 	{
 		switch(dir)
 		{
-			case L2R_U2D://Form left to right,from up to down
+			case L2R_U2D:
 				regval|=(0<<7)|(0<<6)|(0<<5); 
 				break;
 			case L2R_D2U:
@@ -194,7 +170,7 @@ void LCD_Scan_Dir(u8 dir)
 		}
 		dirreg=0X36;
  		regval|=0X08;//BGR   
-		if(lcddev.id==0X6804)regval|=0x02;   
+		if(lcddev.id==0X6804)regval|=0x02;
 		LCD_WriteReg(dirreg,regval);
  		if(regval&0X20)
 		{
@@ -223,7 +199,7 @@ void LCD_Scan_Dir(u8 dir)
 	{
 		switch(dir)
 		{
-			case L2R_U2D://Form left to right,from up to down
+			case L2R_U2D:
 				regval|=(1<<5)|(1<<4)|(0<<3); 
 				break;
 			case L2R_D2U:
@@ -252,7 +228,7 @@ void LCD_Scan_Dir(u8 dir)
 		{
 			dirreg=0X11;
 			regval|=0X6040;	//65K   
-	 	}else  
+	 	}else
 		{
 			dirreg=0X03;
 			regval|=1<<12;  
@@ -289,8 +265,6 @@ void LCD_Fast_DrawPoint(u16 x,u16 y,u16 color)
 }	 
 
 
-//// Set ICD display direction (6804 does not support landscape display) 
-//dir:0, vertical screen; 1, Horizontal screen
 void LCD_Display_Dir(u8 dir)
 {
 	if(dir==0)
@@ -347,46 +321,46 @@ void LCD_Display_Dir(u8 dir)
 void LCD_Init(void)
 { 										  
 		GPIO_InitTypeDef GPIO_InitStructure;
-	  FSMC_NORSRAMInitTypeDef  FSMC_NORSRAMInitStructure;
+	FSMC_NORSRAMInitTypeDef  FSMC_NORSRAMInitStructure;
     FSMC_NORSRAMTimingInitTypeDef  readWriteTiming; 
-	  FSMC_NORSRAMTimingInitTypeDef  writeTiming;
+	FSMC_NORSRAMTimingInitTypeDef  writeTiming;
 
     RCC_AHBPeriphClockCmd(RCC_AHBPeriph_FSMC,ENABLE);	
-	  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOD|RCC_APB2Periph_GPIOE|RCC_APB2Periph_GPIOG|RCC_APB2Periph_AFIO,ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOD|RCC_APB2Periph_GPIOE|RCC_APB2Periph_GPIOG|RCC_APB2Periph_AFIO,ENABLE);
 
- 	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;				
- 	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		
- 	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
- 	  GPIO_Init(GPIOB, &GPIO_InitStructure);
-  
-	  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_14|GPIO_Pin_15;				 
- 	  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 		  
- 	  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
- 	  GPIO_Init(GPIOD, &GPIO_InitStructure); 
+ 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;				 
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 
+ 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 	GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_1|GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_14|GPIO_Pin_15;				 
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 		 
+ 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 	GPIO_Init(GPIOD, &GPIO_InitStructure); 
 	  
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7|GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15;				 
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 		  
+
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7|GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12|GPIO_Pin_13|GPIO_Pin_14|GPIO_Pin_15;				
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 		   
  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
  	GPIO_Init(GPIOE, &GPIO_InitStructure); 
 	  
-
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0|GPIO_Pin_12;	 
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 		 
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; 		
  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
  	GPIO_Init(GPIOG, &GPIO_InitStructure); 
  
-	  readWriteTiming.FSMC_AddressSetupTime = 0x01;	 
-    readWriteTiming.FSMC_AddressHoldTime = 0x00;	 
+	readWriteTiming.FSMC_AddressSetupTime = 0x01;
+    readWriteTiming.FSMC_AddressHoldTime = 0x00;	 	
     readWriteTiming.FSMC_DataSetupTime = 0x0f;		 
     readWriteTiming.FSMC_BusTurnAroundDuration = 0x00;
     readWriteTiming.FSMC_CLKDivision = 0x00;
     readWriteTiming.FSMC_DataLatency = 0x00;
-    readWriteTiming.FSMC_AccessMode = FSMC_AccessMode_A;	
+    readWriteTiming.FSMC_AccessMode = FSMC_AccessMode_A;	 
     
 
-	  writeTiming.FSMC_AddressSetupTime = 0x00;	 
-    writeTiming.FSMC_AddressHoldTime = 0x00;	 	
-    writeTiming.FSMC_DataSetupTime = 0x03;		 
+	writeTiming.FSMC_AddressSetupTime = 0x00;	 
+    writeTiming.FSMC_AddressHoldTime = 0x00;	 		
+    writeTiming.FSMC_DataSetupTime = 0x03;		
     writeTiming.FSMC_BusTurnAroundDuration = 0x00;
     writeTiming.FSMC_CLKDivision = 0x00;
     writeTiming.FSMC_DataLatency = 0x00;
@@ -396,10 +370,10 @@ void LCD_Init(void)
     FSMC_NORSRAMInitStructure.FSMC_Bank = FSMC_Bank1_NORSRAM4;
     FSMC_NORSRAMInitStructure.FSMC_DataAddressMux = FSMC_DataAddressMux_Disable; 
     FSMC_NORSRAMInitStructure.FSMC_MemoryType =FSMC_MemoryType_SRAM;// FSMC_MemoryType_SRAM;  //SRAM   
-    FSMC_NORSRAMInitStructure.FSMC_MemoryDataWidth = FSMC_MemoryDataWidth_16b;  
+    FSMC_NORSRAMInitStructure.FSMC_MemoryDataWidth = FSMC_MemoryDataWidth_16b; 
     FSMC_NORSRAMInitStructure.FSMC_BurstAccessMode =FSMC_BurstAccessMode_Disable;// FSMC_BurstAccessMode_Disable; 
     FSMC_NORSRAMInitStructure.FSMC_WaitSignalPolarity = FSMC_WaitSignalPolarity_Low;
-	  FSMC_NORSRAMInitStructure.FSMC_AsynchronousWait=FSMC_AsynchronousWait_Disable; 
+	FSMC_NORSRAMInitStructure.FSMC_AsynchronousWait=FSMC_AsynchronousWait_Disable; 
     FSMC_NORSRAMInitStructure.FSMC_WrapMode = FSMC_WrapMode_Disable;   
     FSMC_NORSRAMInitStructure.FSMC_WaitSignalActive = FSMC_WaitSignalActive_BeforeWaitState;  
     FSMC_NORSRAMInitStructure.FSMC_WriteOperation = FSMC_WriteOperation_Enable;	
@@ -407,7 +381,7 @@ void LCD_Init(void)
     FSMC_NORSRAMInitStructure.FSMC_ExtendedMode = FSMC_ExtendedMode_Enable; 
     FSMC_NORSRAMInitStructure.FSMC_WriteBurst = FSMC_WriteBurst_Disable; 
     FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = &readWriteTiming; 
-    FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &writeTiming;  
+    FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &writeTiming; 
 
     FSMC_NORSRAMInit(&FSMC_NORSRAMInitStructure);  
 
@@ -418,26 +392,25 @@ void LCD_Init(void)
 	delay_ms(50); // delay 50 ms 
   	lcddev.id = LCD_ReadReg(0x0000);   
   	if(lcddev.id<0XFF||lcddev.id==0XFFFF||lcddev.id==0X9300)
-			                                                      //Read ID is not correct, add 1cddev.id==0x9300 to judge, 
-		                                                        //because 9341 will be read as 9300 without being reset
-	{		
+	{	
+ 		
 		LCD_WR_REG(0XD3);				   
 		LCD_RD_DATA(); 				//dummy read 	
- 		LCD_RD_DATA();   	    
+ 		LCD_RD_DATA();   	    	
   		lcddev.id=LCD_RD_DATA();   						   
  		lcddev.id<<=8;
-		lcddev.id|=LCD_RD_DATA();    			   
+		lcddev.id|=LCD_RD_DATA();  			   
  		if(lcddev.id!=0X9341)		
 		{	
  			LCD_WR_REG(0XBF);				   
 			LCD_RD_DATA(); 			//dummy read 	 
-	 		LCD_RD_DATA();   	    	   
-	 		LCD_RD_DATA(); 				
+	 		LCD_RD_DATA();   	      
+	 		LCD_RD_DATA(); 						  	
 	  		lcddev.id=LCD_RD_DATA();
 			lcddev.id<<=8;
-	  		lcddev.id|=LCD_RD_DATA();	  
+	  		lcddev.id|=LCD_RD_DATA(); 	  
  		} 
-		if(lcddev.id!=0X9341&&lcddev.id!=0X6804)lcddev.id=0x9341;     
+		if(lcddev.id!=0X9341&&lcddev.id!=0X6804)lcddev.id=0x9341;   
 	}
  	printf(" LCD ID:%x\r\n",lcddev.id); 
 	if(lcddev.id==0X9341)	
@@ -534,7 +507,7 @@ void LCD_Init(void)
 		LCD_WR_REG(0x11); //Exit Sleep
 		delay_ms(120);
 		LCD_WR_REG(0x29); //display on	
-	}else if(lcddev.id==0x6804) 
+	}else if(lcddev.id==0x6804) //6804³õÊ¼»¯
 	{
 		LCD_WR_REG(0X11);
 		delay_ms(20);
@@ -671,9 +644,9 @@ void LCD_Init(void)
 		//LCD_WriteReg(0x00e7,0x0010);      
         //LCD_WriteReg(0x0000,0x0001);
         LCD_WriteReg(0x0001,0x0100);     
-        LCD_WriteReg(0x0002,0x0700);                   
+        LCD_WriteReg(0x0002,0x0700);                 
 		//LCD_WriteReg(0x0003,(1<<3)|(1<<4) ); 	//65K  RGB
-		//DRIVE TABLE(Resigter:03H)
+		//DRIVE TABLE
 		//BIT3=AM BIT4:5=ID0:1
 		//AM ID0 ID1   FUNCATION
 		// 0  0   0	   R->L D->U
@@ -692,12 +665,12 @@ void LCD_Init(void)
         LCD_WriteReg(0x000c,0x0001);//display setting          
         LCD_WriteReg(0x000d,0x0000);//0f3c          
         LCD_WriteReg(0x000f,0x0000);
-		    //power Configuration
+		
         LCD_WriteReg(0x0010,0x0000);   
         LCD_WriteReg(0x0011,0x0007);
         LCD_WriteReg(0x0012,0x0000);                                                                 
         LCD_WriteReg(0x0013,0x0000);                 
-       	LCD_WriteReg(0x0007,0x0001);                 
+     	LCD_WriteReg(0x0007,0x0001);                 
        	delay_ms(50); 
         LCD_WriteReg(0x0010,0x1490);   
         LCD_WriteReg(0x0011,0x0227);
@@ -710,8 +683,8 @@ void LCD_Init(void)
         delay_ms(50); 
         LCD_WriteReg(0x0020,0x0000);                                                            
         LCD_WriteReg(0x0021,0x0000);           
-		    delay_ms(50); 
-		    //Correction
+		delay_ms(50); 
+		
         LCD_WriteReg(0x0030,0x0000); 
         LCD_WriteReg(0x0031,0x0604);   
         LCD_WriteReg(0x0032,0x0305);
@@ -724,8 +697,8 @@ void LCD_Init(void)
         LCD_WriteReg(0x003d,0x0a0a);
         delay_ms(50); 
         LCD_WriteReg(0x0050,0x0000); 
-        LCD_WriteReg(0x0051,0x00ef);              
-        LCD_WriteReg(0x0052,0x0000);                
+        LCD_WriteReg(0x0051,0x00ef);                 
+        LCD_WriteReg(0x0052,0x0000);               
         LCD_WriteReg(0x0053,0x013f); 
  
          LCD_WriteReg(0x0060,0xa700);        
@@ -740,7 +713,7 @@ void LCD_Init(void)
       
         LCD_WriteReg(0x0090,0x0010);     
         LCD_WriteReg(0x0092,0x0600);  
-          
+        
         LCD_WriteReg(0x0007,0x0133); 
 	}else if(lcddev.id==0x9320)
 	{
@@ -768,7 +741,7 @@ void LCD_Init(void)
 	
 		LCD_WriteReg(0x2b,(1<<14)|(1<<4));	    
 		LCD_WriteReg(0x50,0);	//Set X Star
-		
+
 		LCD_WriteReg(0x51,239);	//Set Y Star
 		LCD_WriteReg(0x52,0);	//Set Y End.t.
 		LCD_WriteReg(0x53,319);	//
@@ -855,8 +828,10 @@ void LCD_Init(void)
 	{
 		LCD_WriteReg(0x01,0x0100);								  
 		LCD_WriteReg(0x02,0x0700);//LCD Driving Waveform Contral 
-		LCD_WriteReg(0x03,0x1030);   
-	
+		LCD_WriteReg(0x03,0x1030);//Entry Mode  
+
+		//Normal Mode(Window Mode disable)
+
 		LCD_WriteReg(0x04,0x0000); //Scalling Control register     
 		LCD_WriteReg(0x08,0x0207); //Display Control 2 
 		LCD_WriteReg(0x09,0x0000); //Display Control 3	 
@@ -897,7 +872,7 @@ void LCD_Init(void)
 	}	
 	else if(lcddev.id==0x1505)//OK
 	{
-		    //second release on 3/5  ,luminance is acceptable,water wave appear during camera preview
+		// second release on 3/5  ,luminance is acceptable,water wave appear during camera preview
         LCD_WriteReg(0x0007,0x0000);
         delay_ms(50); 
         LCD_WriteReg(0x0012,0x011C);//0x011A   why need to set several times?
@@ -905,7 +880,7 @@ void LCD_Init(void)
         LCD_WriteReg(0x0008,0x000F);
         LCD_WriteReg(0x000A,0x0008);
         LCD_WriteReg(0x000D,0x0008);	    
-        //Correction
+
         LCD_WriteReg(0x0030,0x0707);
         LCD_WriteReg(0x0031,0x0007); //0x0707
         LCD_WriteReg(0x0032,0x0603); 
@@ -924,7 +899,7 @@ void LCD_Init(void)
         LCD_WriteReg(0x0007,0x0001);
         LCD_WriteReg(0x0017,0x0001);
         delay_ms(50); 
-  		  // power Configuration
+
         LCD_WriteReg(0x0010,0x17A0); 
         LCD_WriteReg(0x0011,0x0217);//reference voltage VC[2:0]   Vciout = 1.00*Vcivl
         LCD_WriteReg(0x0012,0x011E);//0x011c  //Vreg1out = Vcilvl*1.80   is it the same as Vgama1out ?
@@ -1014,7 +989,7 @@ void LCD_Init(void)
 		
 		LCD_WriteReg(0x0001,0x0100);
 		LCD_WriteReg(0x0002,0x0700);
-    LCD_WriteReg(0x0003,0x1038);
+        LCD_WriteReg(0x0003,0x1038);
 		LCD_WriteReg(0x0008,0x0202);
 		LCD_WriteReg(0x000a,0x0000);
 		LCD_WriteReg(0x000c,0x0000);
@@ -1102,7 +1077,7 @@ void LCD_Init(void)
 		LCD_WriteReg(0x0007, 0x0100);
 	}else if(lcddev.id==0x8989)//OK |/|/|
 	{	   
-		  LCD_WriteReg(0x0000,0x0001);
+		LCD_WriteReg(0x0000,0x0001);
     	LCD_WriteReg(0x0003,0xA8A4);//0xA8A4
     	LCD_WriteReg(0x000C,0x0000);    
     	LCD_WriteReg(0x000D,0x080C);   
@@ -1198,7 +1173,7 @@ void LCD_Init(void)
 		delay_ms(40);   
 		LCD_WriteReg(0X12,0X0012);//16    
 		delay_ms(40);   
-  	LCD_WriteReg(0X10,0X3420);   
+  		LCD_WriteReg(0X10,0X3420);   
  		LCD_WriteReg(0X13,0X3038);   
 		delay_ms(70);   
 		LCD_WriteReg(0X30,0X0000);   
@@ -1214,7 +1189,7 @@ void LCD_Init(void)
 		  
 		LCD_WriteReg(0X01,0X0100);   
 		LCD_WriteReg(0X02,0X0300);   
-		LCD_WriteReg(0X03,0X1030);  
+		LCD_WriteReg(0X03,0X1030);
 		LCD_WriteReg(0X08,0X0808);   
 		LCD_WriteReg(0X0A,0X0008);   
  		LCD_WriteReg(0X60,0X2700);   
@@ -1231,11 +1206,10 @@ void LCD_Init(void)
 		LCD_WriteReg(0X07,0X0133);   
 	}		
 	LCD_Display_Dir(0);		 	
-	LCD_LED=1;				
+	LCD_LED=1;					
 	LCD_Clear(WHITE);
 }  
 
-//clear function
 void LCD_Clear(u16 color)
 {
 	u32 index=0;      
@@ -1249,9 +1223,6 @@ void LCD_Clear(u16 color)
 	}
 }  
 
-//Fill the specified color block in the a area
-//(sx,sy),(ex.ey):Fill rectangle rectangle coordinates,size of area:(ex-sx+1)*(ey-sx+1)
-//color: fill color
 void LCD_Fill1(u16 sx,u16 sy,u16 ex,u16 ey,u16 color)
 {          
 	u16 i,j;
@@ -1260,12 +1231,11 @@ void LCD_Fill1(u16 sx,u16 sy,u16 ex,u16 ey,u16 color)
 	for(i=sy;i<=ey;i++)
 	{
 	 	LCD_SetCursor(sx,i);      				
-		LCD_WriteRAM_Prepare();     			  
-		for(j=0;j<xlen;j++)LCD_WR_DATA(color);	   
+		LCD_WriteRAM_Prepare();     		  
+		for(j=0;j<xlen;j++)LCD_WR_DATA(color);	  
 	}
 }  
 
-//Fill the specified color block in the specified area
 void LCD_Color_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 *color)
 {  
 	u16 height,width;
@@ -1274,15 +1244,12 @@ void LCD_Color_Fill(u16 sx,u16 sy,u16 ex,u16 ey,u16 *color)
 	height=ey-sy+1;		
  	for(i=0;i<height;i++)
 	{
- 		LCD_SetCursor(sx,sy+i);   
+ 		LCD_SetCursor(sx,sy+i);   	
 		LCD_WriteRAM_Prepare();    
 		for(j=0;j<width;j++)LCD->LCD_RAM=color[i*height+j];
 	}	  
 }  
- 
-//Draw line
-//x1,y1:Starting point coordinates
-//x2,y2:End point coordinates
+
 void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2)
 {
 	u16 t; 
@@ -1318,8 +1285,6 @@ void LCD_DrawLine(u16 x1, u16 y1, u16 x2, u16 y2)
 	}  
 }    
 
-//DrawRectangle
-//(x1,y1),(x2,y2):Diagonal coordinate of the rectangle
 void LCD_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2)
 {
 	LCD_DrawLine(x1,y1,x2,y1);
@@ -1328,15 +1293,12 @@ void LCD_DrawRectangle(u16 x1, u16 y1, u16 x2, u16 y2)
 	LCD_DrawLine(x2,y1,x2,y2);
 }
 
-//Draw a circle of specified size at the specified position 
-//(x,y) : center point
-//r:radius
 void Draw_Circle(u16 x0,u16 y0,u8 r)
 {
 	int a,b;
 	int di;
 	a=0;b=r;	  
-	di=3-(r<<1);             
+	di=3-(r<<1);            
 	while(a<=b)
 	{
 		LCD_DrawPoint(x0+a,y0-b);             //5
@@ -1346,9 +1308,9 @@ void Draw_Circle(u16 x0,u16 y0,u8 r)
 		LCD_DrawPoint(x0-a,y0+b);             //1       
  		LCD_DrawPoint(x0-b,y0+a);             
 		LCD_DrawPoint(x0-a,y0-b);             //2             
-  		LCD_DrawPoint(x0-b,y0-a);           //7     	         
+  		LCD_DrawPoint(x0-b,y0-a);             //7     	         
 		a++;
-		//Draw a circle using the Bresenham algorithm 
+	
 		if(di<0)di +=4*a+6;	  
 		else
 		{
@@ -1358,24 +1320,19 @@ void Draw_Circle(u16 x0,u16 y0,u8 r)
 	}
 } 									  
 
-//Displays a character at a specified position
-//X,y: the starting coordinate
-//num: to display the character: "" - >" ~ "
-//size: font size 12/16 
-//mode: superposition method (1) or a superposition method (0)
 void LCD_ShowChar(u16 x,u16 y,u8 num,u8 size,u8 mode)
 {  							  
     u8 temp,t1,t;
 	u16 y0=y;
 	u16 colortemp=POINT_COLOR;      			     
-		   
-	num=num-' ';//Get the offset value
+	   
+	num=num-' ';
 	if(!mode) 
 	{
 	    for(t=0;t<size;t++)
 	    {   
-			if(size==12)temp=asc2_1206[num][t];  //call 1206 font
-			else temp=asc2_1608[num][t];		     //call 1608 font                          
+			if(size==12)temp=asc2_1206[num][t];  
+			else temp=asc2_1608[num][t];		                         
 	        for(t1=0;t1<8;t1++)
 			{			    
 		        if(temp&0x80)POINT_COLOR=colortemp;
@@ -1383,12 +1340,12 @@ void LCD_ShowChar(u16 x,u16 y,u8 num,u8 size,u8 mode)
 				LCD_DrawPoint(x,y);	
 				temp<<=1;
 				y++;
-				if(x>=lcddev.width){POINT_COLOR=colortemp;return;}//Exceeding area
+				if(x>=lcddev.width){POINT_COLOR=colortemp;return;}
 				if((y-y0)==size)
 				{
 					y=y0;
 					x++;
-					if(x>=lcddev.width){POINT_COLOR=colortemp;return;}//Exceeding area
+					if(x>=lcddev.width){POINT_COLOR=colortemp;return;}
 					break;
 				}
 			}  	 
@@ -1397,28 +1354,27 @@ void LCD_ShowChar(u16 x,u16 y,u8 num,u8 size,u8 mode)
 	{
 	    for(t=0;t<size;t++)
 	    {   
-			if(size==12)temp=asc2_1206[num][t];  //call 1206 font
-			else temp=asc2_1608[num][t];         //call 1608 font                       
+			if(size==12)temp=asc2_1206[num][t]; 
+			else temp=asc2_1608[num][t];		                      
 	        for(t1=0;t1<8;t1++)
 			{			    
 		        if(temp&0x80)LCD_DrawPoint(x,y); 
 				temp<<=1;
 				y++;
-				if(x>=lcddev.height){POINT_COLOR=colortemp;return;}//Exceeding area
+				if(x>=lcddev.height){POINT_COLOR=colortemp;return;}
 				if((y-y0)==size)
 				{
 					y=y0;
 					x++;
-					if(x>=lcddev.width){POINT_COLOR=colortemp;return;}//Exceeding area
+					if(x>=lcddev.width){POINT_COLOR=colortemp;return;}
 					break;
 				}
 			}  	 
 	    }     
 	}
 	POINT_COLOR=colortemp;	    	   	 	  
-} 
+}   
 
-//m^n
 u32 LCD_Pow(u8 m,u8 n)
 {
 	u32 result=1;	 
@@ -1426,12 +1382,6 @@ u32 LCD_Pow(u8 m,u8 n)
 	return result;
 }			 
  
-//Displays a number,if a high order of 0, it will not display
-//x,y: starting coordinate 
-//len: number of digits 
-//size: font size 
-//color: color
-//num: value (0-4294967295);
 void LCD_ShowNum(u16 x,u16 y,u32 num,u8 len,u8 size)
 {         	
 	u8 t,temp;
@@ -1452,15 +1402,6 @@ void LCD_ShowNum(u16 x,u16 y,u32 num,u8 len,u8 size)
 	}
 } 
 
-//Displays a number,if a high order of 0, it will not display
-//x,y: start coordinate
-//num: value (0 ~ 999999999);
-//Len: length (that is, the number of digits to be displayed) 
-//size: font size 
-//mode:
-//[7]:0, no filling :1, filling 0.
-//[6:1]: retain 
-//[0]:0, non-overlapping: 1,overlapping
 void LCD_ShowxNum(u16 x,u16 y,u32 num,u8 len,u8 size,u8 mode)
 {  
 	u8 t,temp;
@@ -1481,18 +1422,13 @@ void LCD_ShowxNum(u16 x,u16 y,u32 num,u8 len,u8 size,u8 mode)
 	 	LCD_ShowChar(x+(size/2)*t,y,temp+'0',size,mode&0X01); 
 	}
 } 
-	
-//Display string
-//X,y: the starting point
-//width, height: area 
-//size: font size 
-//*p: string start address
+	  
 void LCD_ShowString(u16 x,u16 y,u16 width,u16 height,u8 size,u8 *p)
 {         
 	u8 x0=x;
 	width+=x;
 	height+=y;
-    while((*p<='~')&&(*p>=' '))//Determine if it is an illegal character!
+    while((*p<='~')&&(*p>=' '))
     {       
         if(x>=width){x=x0;y+=size;}
         if(y>=height)break;

@@ -22,11 +22,10 @@ extern int qianjin,houtui;
 * Function       MiniCar_Run
 * @author        john
 * @date          2018.10.9    
-* @brief         advance
 * @param[in]     Speed  £¨0~1000£© 
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void MiniCar_Run(int Speed0)
 {
@@ -39,11 +38,10 @@ void MiniCar_Run(int Speed0)
 * Function       MiniCar_Back
 * @author        john
 * @date          2018.10.9    
-* @brief         back
 * @param[in]     Speed  £¨0~1000£© 
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void MiniCar_Back(int Speed0)
 {
@@ -53,14 +51,13 @@ void MiniCar_Back(int Speed0)
 }
 
 /**
-* Function       MiniCar_Stop
+* Function       MiniCar_Back
 * @author        john
 * @date          2018.10.9    
-* @brief         stop
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void MiniCar_Stop()
 {

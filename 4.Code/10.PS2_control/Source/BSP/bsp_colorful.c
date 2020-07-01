@@ -4,7 +4,6 @@
 * @author       liusen
 * @version      V1.0
 * @date         2017.07.17
-* @brief        
 * @details      
 * @par History  
 *                 
@@ -20,8 +19,6 @@
 * Function       bsp_Colorful_Control
 * @author        liusen
 * @date          2015.01.03    
-* @brief         
-* @param[in]     v_RedOnOff : v_GreenOnOff£º v_BlueOnOff£º
 * @param[out]    void
 * @retval        void
 * @par History   

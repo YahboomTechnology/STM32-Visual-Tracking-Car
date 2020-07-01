@@ -6,7 +6,7 @@
 * @date         2017.07.17
 * @brief        
 * @details      
-* @par History 
+* @par History  
 *                 
 * version:		liusen_20170717
 */
@@ -17,7 +17,6 @@
 #include "sys.h"
 #include "app_motor.h"
 #include "delay.h"
-
 
 
 int position = 0;

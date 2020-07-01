@@ -4,9 +4,9 @@
 * @author       john
 * @version      V1.0
 * @date         2018.10.18
-* @brief        
+* @brief        巡线模式运动
 * @details      
-* @par History  
+* @par History  见如下说明
 *                 
 * version:		john_20181018
 */
@@ -34,9 +34,9 @@
 #define dir_d     0.16//d  0.2       0.16   //0.16
 
 
-float fla_cha=0;     //
-int offset,suducha; //offset is car and center line deviation
-extern int speed;  
+float fla_cha=0;     
+int offset,suducha; 
+extern int speed;   
 
 
 /**
@@ -55,7 +55,7 @@ void app_LineWalking0(void)
 }
 /*****************OV7670************************/
 
-extern u8 ov_sta;	//Defined in the exit.c file
+extern u8 ov_sta;	
 extern int nextblack;
 int t=0;
 int fz=120,zhongzhi=80;
@@ -64,7 +64,7 @@ u8 black_line[80]={0};
 u8 dis_image[64][128]={0};
 
 
-void UART1SendByte();
+void UART1SendByte(unsigned char SendData);
 extern void LCD_PrintImage(u8 *pucTable, u16 usRowNum, u16 usColumnNum);
 
 
@@ -76,9 +76,9 @@ extern void LCD_PrintImage(u8 *pucTable, u16 usRowNum, u16 usColumnNum);
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   
+* @par History   no
 */
-void dis_play_image()
+void dis_play_image(void)
 {
   
     int i=0,j=0,n=0,m=0;
@@ -87,9 +87,9 @@ void dis_play_image()
 			{
 				dis_image[i][j]=0;
 			}
-     for(i=0,m=79;i<64;i++,m--)
+     for(i=0,m=79;i<64;i++,m--) 
      {
-       for(j=0,n=0;j<240,n<=127;j++)
+       for(j=0,n=0;j<=240;j++)
           {					
             if(j<=56)
             {
@@ -97,25 +97,33 @@ void dis_play_image()
                 {
                    if(date[m][j]>=fz)
                      dis_image[i][n]=1;
-                     n++;
+									 if(n<=127)
+										{
+											n++;
+										}		
                 }
-            
             }
 						else if(j>56&&j<=72)
             {
                if(date[m][j]>=fz)
                   dis_image[i][n]=1;
-                   n++; 
+							 if(n<=127)
+								{
+									n++;
+								}	
             }
-            else
+            else 
             {
              if(j%2==0)
               {
                  if(date[m][j]>=fz)
                     dis_image[i][n]=1;
-                    n++;
+								 if(n<=127)
+									{
+										n++;
+									}	
               }
-            }   
+            }
           }
       }
    LCD_PrintImage((u8*)dis_image, 64, 128);
@@ -158,34 +166,32 @@ void dir()
 * @param[out]    void
 * @retval        void
  
-* @par History   
+* @par History   no
 */
 
 void find_line()
 {
-	int i,j,black,line,d,zhijiao,last,a,b,c,q;
+	int i,j,black,line,last,q;//d,zhijiao,a,b,c,
 	q=0;
 	for(i=0;i<80;i++)
 		{
 			for(j=0;j<240;j++)
 				{
-					if((j+4) < 240 && date[i][j] < fz && date[i][j+4] < fz)//Think of a black line when two consecutive black dots are found
+					if((j+4) < 240 && date[i][j] < fz && date[i][j+4] < fz)
 						{		
-							if((j-nextblack > 90)||(nextblack-j > 90))//When the black point found is very different from the previous black point, we need to judge whether it is a clutter.
+							if((j-nextblack > 90)||(nextblack-j > 90))
 								{
-									last=j;//Record this black dots
+									last=j;
 									for(j=0;j<236;j++)
 										{	
-												if( (i+5) < 80 && date[i+5][j] < fz && date[i+5][j+4] < fz)//Determine if the black point in the first five lines deviates from this point
+												if( (i+5) < 80 && date[i+5][j] < fz && date[i+5][j+4] < fz)
 														{		
-															if((j-last>90)||(last-j>90))//The difference between the first five lines and this point is very large, 
-																                         //which means that it is clutter, then this is filtered out. 
-															                           //The x coordinate of this point is consistent with the previous one.
+															if((j-last>90)||(last-j>90))
 																{
 																	black=nextblack;
 																	break;
 																}
-															else 		//Not clutter
+															else 		
 																{
 																	black=j+1;
 																	nextblack=black;
@@ -197,7 +203,7 @@ void find_line()
 										}
 										break;
 								}
-								else//This is a black line
+								else
 									{
 										black=j+1;
 										nextblack=black;
@@ -207,28 +213,24 @@ void find_line()
 						}
 								
 						
-						if(j==238)//When the 238 line is found or the black line is not found, 
-							        //it means that there is no black line in the this line, 
-						          //then, the x coordinate of this point is also used in the previous line.
+						if(j==238)
 						{
 							q=1;
 						}
 						
 				}
-				if(black==1)//When the first point is a black line, we need to find the right side of the black line
+				if(black==1)
 					{
 					for(j=0;j<236;j++)
 						{
-						if(date[i][j] > fz && date[i][j+4] > fz)//Find two consecutive white spots	
+						if(date[i][j] > fz && date[i][j+4] > fz)				
 							{		
-									if((j-nextblack>70)||(nextblack-j>70))// When the white point found is very different from the previous black point, we need to judge whether it is a clutter.
+									if((j-nextblack>70)||(nextblack-j>70))
 										{
 											last=j;
 											for(j=0;j<236;j++)
 												{	
-													if((i+5) < 80 && date[i+5][j] > fz && date[i+5][j+4] > fz)//The difference between the first five lines and this point is very large, 
-																                                                    //which means that it is clutter, then this is filtered out. 
-															                                                      //The x coordinate of this point is consistent with the previous one.
+													if((i+5) < 80 && date[i+5][j] > fz && date[i+5][j+4] > fz)
 													{		
 																	if((j-last>70)||(last-j>70))
 																		{
@@ -261,7 +263,7 @@ void find_line()
 					black=nextblack;
 					black_line[i]=black;			
 		}		
-		line=(black_line[0]+black_line[10]+black_line[20]+black_line[30]+black_line[50])/5;//取中线当中的5个值作为小车的当前位置
+		line=(black_line[0]+black_line[10]+black_line[20]+black_line[30]+black_line[50])/5;
 		if(t==1)
 			{
 				offset=(line-zhongzhi);
@@ -281,11 +283,11 @@ void find_line()
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   
+* @par History   no
 */
 void senddate()
 {
-	u16 a, b,c;
+	u16 a, b;//,c;
 	for(a=0;a<80;a++)
 		for(b=240;b>0;b--)
 		{
@@ -349,7 +351,7 @@ void camera_refresh()
 						OV7670_RCK_H;
 						OV7670_RCK_L;
 						OV7670_RCK_H;
-						if((j>=50 && j<130) && (i>=0 && i<240))//80*240	
+						if((j>=50 && j<130) && (i>=1 && i<240))//80*240	
 						{	
 								date[j-50][i-0]=color;
 						} 
@@ -370,7 +372,7 @@ void camera_refresh()
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   
+* @par History   no
 */
 void app_LineWalking(void)
 {

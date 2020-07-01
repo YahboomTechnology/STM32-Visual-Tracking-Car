@@ -18,13 +18,13 @@ void EXTI9_5_IRQHandler(void)
 			{
 				
 				OV7670_WREN=1;		
-				OV7670_WRST=0;	 	  		 
+				OV7670_WRST=0;	 	 		 
 				OV7670_WRST=1;	
 				
 			}else 
 			{
 				OV7670_WREN=0;		
-				OV7670_WRST=0;	 		  		 
+				OV7670_WRST=0;	 			 
 				OV7670_WRST=1;	
 				
 			}
@@ -32,7 +32,7 @@ void EXTI9_5_IRQHandler(void)
 		}
 	}
  
-	EXTI_ClearITPendingBit(EXTI_Line8);  			  
+	EXTI_ClearITPendingBit(EXTI_Line8);  				  
 } 
 
 

@@ -33,3 +33,4 @@
 .\output\app_bluetooth.o: Source\APP\sccb.h
 .\output\app_bluetooth.o: .\Source\BSP\bsp_colorful.h
 .\output\app_bluetooth.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
+.\output\app_bluetooth.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h

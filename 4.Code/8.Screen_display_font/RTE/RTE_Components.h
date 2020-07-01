@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Component Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'Screen display font' 
+ * Project: 'Screen_display_font' 
  * Target:  'Target 1' 
  */
 

@@ -1,6 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork -I.\Source\CMSIS -I.\Source\FWlib\inc -I.\Source\FWlib\src -I.\Source\BSP -I.\Source\APP -I.\Source\PUBLIC\delay -I.\Source\PUBLIC\sys -I.\Source\PUBLIC\usart -I.\Source\Protocol -I.\Source\APP\EXTI -I.\Source\APP\LCD -I.\Source\APP\OV7670 -I.\Source\APP\LED -I.\Source\APP\OLED
--I E:\2.外贸\外贸产品资料\STM32_Visual_Tracking_Car\STM32-Visual-Tracking-Car\4.Code\11.Bluetooth_control_20190927\RTE
--I C:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include
--I Device\Include
--D__UVISION_VERSION="514" -D_RTE_ -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER
--o .\output\bsp_servo.o --omf_browse .\output\bsp_servo.crf --depend .\output\bsp_servo.d "Source\BSP\bsp_servo.c"

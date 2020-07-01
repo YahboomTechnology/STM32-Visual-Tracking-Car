@@ -4,7 +4,7 @@
 * @author       liusen
 * @version      V1.0
 * @date         2017.07.17
-* @brief        
+* @brief       
 * @details      
 * @par History  
 *                 
@@ -22,8 +22,6 @@ extern int qianjin,houtui;
 * Function       TIM1_Int_Init
 * @author        liusen
 * @date          2015.01.03    
-* @brief         
-* @param[in]     arr,psc
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -35,40 +33,37 @@ void TIM1_Int_Init(u16 arr,u16 psc)
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE); 
 	
-	TIM_TimeBaseStructure.TIM_Period = arr; 
+	TIM_TimeBaseStructure.TIM_Period = arr; 	
 	TIM_TimeBaseStructure.TIM_Prescaler = (psc-1); 
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; 
-	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; 
+	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  
 	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;   
 	TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure); 
  
 	TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE ); 
 
-
-	NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_IRQn;  
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  
+	NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_IRQn; 
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; 
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;  
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; 
 	NVIC_Init(&NVIC_InitStructure);  
 
 
-	TIM_Cmd(TIM1, ENABLE);  		 
+	TIM_Cmd(TIM1, ENABLE);  			 
 }
 /**
 * Function       TIM1_Int_Init
 * @author        liusen
 * @date          2015.01.03    
-* @brief         
-* @param[in]     arr.ppsc£º
 * @param[out]    void
 * @retval        void
 * @par History   
 */
-int num = 0;	 
-long g_count = 0;
+int num = 0;	
+long g_count = 0; 
 int speed2=0;
 extern int speed;
-void TIM1_UP_IRQHandler(void)   
+void TIM1_UP_IRQHandler(void)  
 {
 	speed2=speed*2;
 	if (TIM_GetITStatus(TIM1, TIM_IT_Update) != RESET)  
@@ -80,7 +75,7 @@ void TIM1_UP_IRQHandler(void)
 		#ifdef USE_SERVO_J1
 		if(num <= (Angle_J1 * 11 + 500)/10)
 		{
-			GPIO_SetBits(Servo_J1_PORT, Servo_J1_PIN );		
+			GPIO_SetBits(Servo_J1_PORT, Servo_J1_PIN );	
 		}
 		else
 		{

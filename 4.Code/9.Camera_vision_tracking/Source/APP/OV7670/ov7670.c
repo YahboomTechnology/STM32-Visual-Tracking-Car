@@ -24,8 +24,8 @@ u8 OV7670_Init(void)
 
 
 	
- 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;				
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 
+ 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7;				 
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		
  	GPIO_Init(GPIOC, &GPIO_InitStructure);
  	GPIO_SetBits(GPIOC,GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7);	
 
@@ -38,17 +38,17 @@ u8 OV7670_Init(void)
  	GPIO_Init(GPIOB, &GPIO_InitStructure);
 	GPIO_SetBits(GPIOB,GPIO_Pin_0 | GPIO_Pin_1);
 	   
-  GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable,ENABLE);
+  GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable,ENABLE);	//SWD
 
- 	SCCB_Init();        		 	  
- 	if(SCCB_WR_Reg(0x12,0x80))return 1;	 
+ 	SCCB_Init();        		  	  
+ 	if(SCCB_WR_Reg(0x12,0x80))return 1;  
 	delay_ms(50); 
-	
+
  	temp=SCCB_RD_Reg(0x0b);   
 	if(temp!=0x73)return 2;  
  	temp=SCCB_RD_Reg(0x0a);   
 	if(temp!=0x76)return 2;
-	  
+  
 	for(i=0;i<sizeof(ov7670_init_reg_tbl_RGB565)/sizeof(ov7670_init_reg_tbl_RGB565[0])/2;i++)
 	{
 	   	SCCB_WR_Reg(ov7670_init_reg_tbl_RGB565[i][0],ov7670_init_reg_tbl_RGB565[i][1]);
@@ -60,7 +60,7 @@ u8 OV7670_Init(void)
 OV7670_CONFIG ov7670_config;
 
 
-  void config_ov7670_OutPut(u16 xsta,u16 ysta,u16 width,u16 height,u8 ouput_mode){
+void config_ov7670_OutPut(u16 xsta,u16 ysta,u16 width,u16 height,u8 ouput_mode){
 	int i=0;
 	ov7670_config.xsta = xsta;
 	ov7670_config.ysta = ysta;
@@ -87,12 +87,7 @@ OV7670_CONFIG ov7670_config;
 	LCD_Clear(WHITE);	
 }
 ////////////////////////////////////////////////////////////////////////////
-//OV7670 function setting
-//0:automatic
-//1: sunny
-//2, cloudy
-//3, office
-//4, home
+
 void OV7670_Light_Mode(u8 mode)
 {
 	u8 reg13val=0XE7;
@@ -133,7 +128,7 @@ void OV7670_Light_Mode(u8 mode)
 //4,2
 void OV7670_Color_Saturation(u8 sat)
 {
-	u8 reg4f5054val=0X80;//Default sat = 2,Do not adjust the setting of chroma
+	u8 reg4f5054val=0X80;
  	u8 reg52val=0X22;
 	u8 reg53val=0X5E;
  	switch(sat)
@@ -160,7 +155,7 @@ void OV7670_Color_Saturation(u8 sat)
 			break;	
 	}
 	SCCB_WR_Reg(0X4F,reg4f5054val);	
-	SCCB_WR_Reg(0X50,reg4f5054val);	 
+	SCCB_WR_Reg(0X50,reg4f5054val);	
 	SCCB_WR_Reg(0X51,0X00);			
 	SCCB_WR_Reg(0X52,reg52val);		
 	SCCB_WR_Reg(0X53,reg53val);		
@@ -175,7 +170,7 @@ void OV7670_Color_Saturation(u8 sat)
 //4,2
 void OV7670_Brightness(u8 bright)
 {
-	u8 reg55val=0X00;//default is ight =2 
+	u8 reg55val=0X00;
   	switch(bright)
 	{
 		case 0://-2
@@ -193,7 +188,7 @@ void OV7670_Brightness(u8 bright)
 	}
 	SCCB_WR_Reg(0X55,reg55val);	
 }
-//  Contrast setting 
+
 //0:-2
 //1:-1
 //2,0
@@ -201,7 +196,7 @@ void OV7670_Brightness(u8 bright)
 //4,2
 void OV7670_Contrast(u8 contrast)
 {
-	u8 reg56val=0X40;// default is contrast = 2
+	u8 reg56val=0X40;
   	switch(contrast)
 	{
 		case 0://-2
@@ -219,17 +214,10 @@ void OV7670_Contrast(u8 contrast)
 	}
 	SCCB_WR_Reg(0X56,reg56val);	
 }
-// special effects setting 
-//0: ordinary mode  
-//1, negative
-//2,  black white
-//3, Close to red 
-//4, Close to green
-//5, Close to blue
-//6, Retro    
+    
 void OV7670_Special_Effects(u8 eft)
 {
-	u8 reg3aval=0X04;// default is ordinary mode
+	u8 reg3aval=0X04;
 	u8 reg67val=0XC0;
 	u8 reg68val=0X80;
 	switch(eft)
@@ -265,9 +253,9 @@ void OV7670_Special_Effects(u8 eft)
 			reg68val=0X40;
 			break;	 
 	}
-	SCCB_WR_Reg(0X3A,reg3aval);//TSLB
-	SCCB_WR_Reg(0X68,reg67val);//MANU
-	SCCB_WR_Reg(0X67,reg68val);//MANV
+	SCCB_WR_Reg(0X3A,reg3aval);
+	SCCB_WR_Reg(0X68,reg67val);
+	SCCB_WR_Reg(0X67,reg68val);
 }	
 
 void OV7670_Window_Set(u16 sx,u16 sy,u16 width,u16 height)
@@ -280,7 +268,7 @@ void OV7670_Window_Set(u16 sx,u16 sy,u16 width,u16 height)
 	endx=(sx+width*2)%784;	//   sx:HSTART endx:HSTOP    
  	endy=sy+height*2;		//   sy:VSTRT endy:VSTOP		
 	
-	//HREF setting
+
 	temp=SCCB_RD_Reg(0X32);				
 	temp&=0XC0;
 	temp|=((endx&0X07)<<3)|(sx&0X07);	
@@ -288,7 +276,7 @@ void OV7670_Window_Set(u16 sx,u16 sy,u16 width,u16 height)
 	SCCB_WR_Reg(0X17,sx>>3);			
 	SCCB_WR_Reg(0X18,endx>>3);			
 
-	//VREF setting
+
 	temp=SCCB_RD_Reg(0X03);				
 	temp&=0XF0;
 	temp|=((endy&0X03)<<2)|(sy&0X03);

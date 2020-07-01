@@ -4,7 +4,6 @@
 * @author       xiaozhen
 * @version      V1.0
 * @date         2018.03.11
-* @brief        
 * @details      
 * @par History  
 *                 
@@ -29,7 +28,7 @@
 
 u16 Handkey;
 u8 Comd[2]={0x01,0x42};	
-u8 scan[9]={0x01,0x42,0x00,0x00,0x00,0x00,0x00,0x00,0x00};//{0x01,0x42,0x00,0x5A,0x5A,0x5A,0x5A,0x5A,0x5A};	// ÀàÐÍ¶ÁÈ¡
+u8 scan[9]={0x01,0x42,0x00,0x00,0x00,0x00,0x00,0x00,0x00};//{0x01,0x42,0x00,0x5A,0x5A,0x5A,0x5A,0x5A,0x5A};	
 
 u8 Data[9]={0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}; 
 u16 MASK[]={
@@ -55,10 +54,8 @@ u16 MASK[]={
 * Function       delay_1us
 * @author        xiaozhen
 * @date          2018.03.11
-* @brief         
-* @param         xms£º£¨ms£©
 * @retval        void
-* @par History   no
+* @par History   
 */	
 void delay_1us(u32 n)
 {
@@ -71,7 +68,6 @@ void delay_1us(u32 n)
 * Function       PS2_Init
 * @author        Danny
 * @date          2017.08.16
-* @brief         PS2
 * @param         void
 * @retval        void
 * @par History   
@@ -84,7 +80,7 @@ void PS2_Init(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB|RCC_APB2Periph_GPIOC, ENABLE);  	
 	
   	GPIO_InitStructure.GPIO_Pin = PS2_SCK_PIN;
-  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;                              
+  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;                                
   	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
   	GPIO_Init(PS2_SCK_PORT, &GPIO_InitStructure);	
 
@@ -95,7 +91,7 @@ void PS2_Init(void)
 	
 	
 	GPIO_InitStructure.GPIO_Pin = PS2_CS_PIN ;	
-  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;                               
+  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;                                
   	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
   	GPIO_Init(PS2_CS_PORT, &GPIO_InitStructure);	
 
@@ -115,7 +111,6 @@ void PS2_Init(void)
 * Function       PS2_ReadData
 * @author        xiaozhen
 * @date          2018.03.11
-* @brief         
 * @param         void
 * @retval        void
 * @par History   
@@ -132,7 +127,7 @@ u8 PS2_ReadData(u8 command)
 		else
 			DO_L;
 		command = command >> 1;	   
-		delay_1us(10);			   
+		delay_1us(10);			  
 		CLC_L;
 		delay_1us(10);
 		if(DI) 					   
@@ -143,17 +138,16 @@ u8 PS2_ReadData(u8 command)
     }
     DO_H;
 	delay_1us(50);
-    return res;					   
+    return res;					  
 }
 
 /**
 * Function       PS2_DataKey
 * @author        Danny
 * @date          2017.08.16
-* @brief         
 * @param         void
 * @retval        void
-* @par History   
+* @par History  
 */	
 
 unsigned char PS2_DataKey()
@@ -162,27 +156,26 @@ unsigned char PS2_DataKey()
 
 	PS2_ClearData();
 	CS_L;
-	for(i=0;i<9;i++)	            
+	for(i=0;i<9;i++)	             
 	{
 		Data[i] = PS2_ReadData(scan[i]);	
 	} 
 	CS_H;
 	
 
-	Handkey=(Data[4]<<8)|Data[3];     
+	Handkey=(Data[4]<<8)|Data[3];    
 	for(index=0;index<16;index++)
 	{	    
 		if((Handkey&(1<<(MASK[index]-1)))==0)
 			return index+1;
 	}
-	return 0;                         
+	return 0;                        
 }
 
 /**
 * Function       PS2_AnologData
 * @author        xiaozhen
 * @date          2018.03.11
-* @brief         range:0~256
 * @param         void
 * @retval        void
 * @par History   
@@ -197,7 +190,6 @@ u8 PS2_AnologData(u8 button)
 * Function       PS2_ClearData
 * @author        xiaozhen
 * @date          2018.03.11
-* @brief         
 * @param         void
 * @retval        void
 * @par History   

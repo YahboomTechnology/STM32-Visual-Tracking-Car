@@ -29,18 +29,20 @@ void bsp_init(void);
 #define USE_IRAVOID_L1
 #define USE_IRAVOID_R1
 
+
 #define USE_COLOR_RED
 #define USE_COLOR_GREEN
 #define USE_COLOR_BLUE
 
+
 #define USE_LIGHTSEEKING_L1
 #define USE_LIGHTSEEKING_R1
+
 
 #define USE_ULTRASONIC
 
 
 #define USE_BUZZER
-
 
 #define USE_FIRE
 

@@ -5,7 +5,6 @@
 * @version      V1.0
 * @date         2017.07.17
 * @brief        
-* @details      
 * @par History  
 *                 
 * version:		liusen_20170717

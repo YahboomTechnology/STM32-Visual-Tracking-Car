@@ -3,8 +3,7 @@
 * @file         app_lightseeking.c	
 * @author       liusen
 * @version      V1.0
-* @date         2017.07.17
-* @brief        
+* @date         2017.07.17 
 * @details      
 * @par History  
 *                 
@@ -30,7 +29,7 @@ int position = 0;
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void app_colorMode(void)
 {

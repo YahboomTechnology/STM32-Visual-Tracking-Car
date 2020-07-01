@@ -1,12 +1,12 @@
-#ifndef _OV7670_H
+	#ifndef _OV7670_H
 #define _OV7670_H
 #include "sys.h"
 #include "sccb.h"
 
-#define OV7670_VSYNC  	PAin(8)			//Synchronization signal detection IO port
-#define OV7670_WRST		PBout(0)		  //Write pointer reset
-#define OV7670_WREN		PCout(7)		  //Write FUIFO enable
-//#define OV7670_RCK		PBout(4)		//Read data clock
+#define OV7670_VSYNC  	PAin(8)			
+#define OV7670_WRST		PBout(0)		
+#define OV7670_WREN		PCout(7)		
+//#define OV7670_RCK		PBout(4)		
 #define OV7670_RCK_L  GPIOC->BRR  = GPIO_Pin_6
 #define OV7670_RCK_H  GPIOC->BSRR = GPIO_Pin_6
 
@@ -28,9 +28,9 @@ typedef struct{
 
 
 
-	   
-extern const u8 ov7670_init_reg_tbl_RGB565[171][2];		//Register and configuration table
-extern const u8 ov7670_init_reg_tbl_YUV[174][2];		  //Register and configuration table
+	  
+extern const u8 ov7670_init_reg_tbl_RGB565[171][2];		
+extern const u8 ov7670_init_reg_tbl_YUV[174][2];		
 
 extern OV7670_CONFIG ov7670_config;
 

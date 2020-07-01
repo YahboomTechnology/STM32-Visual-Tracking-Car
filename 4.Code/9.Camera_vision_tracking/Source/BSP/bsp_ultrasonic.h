@@ -4,7 +4,6 @@
 * @author       liusen
 * @version      V1.0
 * @date         2017.07.21
-* @brief        
 * @details      
 * @par History  
 *                 

@@ -26,12 +26,12 @@
 
 
 
-#define DI   PCin(1)           
+#define DI   PCin(1)          
 
 #define DO_H PCout(2)=1        
 #define DO_L PCout(2)=0        
 
-#define CS_H PCout(3)=1       
+#define CS_H PCout(3)=1      
 #define CS_L PCout(3)=0       
 
 #define CLC_H PAout(0)=1      
@@ -76,7 +76,7 @@ extern u16 MASK[16];
 extern u16 Handkey;
 
 void PS2_Init(void);
-u8 PS2_DataKey(void);		  
+u8 PS2_DataKey(void);		 
 u8 PS2_AnologData(u8 button); 
 void PS2_ClearData(void);	  
 

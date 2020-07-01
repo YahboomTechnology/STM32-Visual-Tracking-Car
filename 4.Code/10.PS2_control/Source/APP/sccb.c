@@ -10,16 +10,16 @@ void SCCB_Init(void)
  	
  	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);	 
 	
-  	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;				
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		
+  	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;				 
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU; 		 
  	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
  	GPIO_Init(GPIOA, &GPIO_InitStructure);
- 	GPIO_SetBits(GPIOA,GPIO_Pin_13);						
+ 	GPIO_SetBits(GPIOA,GPIO_Pin_13);					
 
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;				 
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 
  	GPIO_Init(GPIOA, &GPIO_InitStructure);
- 	GPIO_SetBits(GPIOA,GPIO_Pin_12);						
+ 	GPIO_SetBits(GPIOA,GPIO_Pin_12);						 
  
 	SCCB_SDA_OUT();	   
 }			 
@@ -27,12 +27,12 @@ void SCCB_Init(void)
 
 void SCCB_Start(void)
 {
-    SCCB_SDA=1;     
+    SCCB_SDA=1;      
     SCCB_SCL=1;	    
     delay_us(50);  
     SCCB_SDA=0;
     delay_us(50);	 
-    SCCB_SCL=0;	      
+    SCCB_SCL=0;	     
 }
 
 
@@ -57,7 +57,7 @@ void SCCB_No_Ack(void)
 	SCCB_SDA=0;	
 	delay_us(50);
 }
- 
+
 u8 SCCB_WR_Byte(u8 dat)
 {
 	u8 j,res;	 
@@ -76,7 +76,7 @@ u8 SCCB_WR_Byte(u8 dat)
 	SCCB_SCL=1;			
 	delay_us(50);
 	if(SCCB_READ_SDA)res=1;  
-	else res=0;       
+	else res=0;        
 	SCCB_SCL=0;		 
 	SCCB_SDA_OUT();		
 	return res;  
@@ -107,7 +107,7 @@ u8 SCCB_WR_Reg(u8 reg,u8 data)
 	delay_us(100);
   	if(SCCB_WR_Byte(reg))res=1;		
 	delay_us(100);
-  	if(SCCB_WR_Byte(data))res=1; 	
+  	if(SCCB_WR_Byte(data))res=1;  
   	SCCB_Stop();	  
   	return	res;
 }		  					    
@@ -118,7 +118,7 @@ u8 SCCB_RD_Reg(u8 reg)
 	SCCB_Start(); 				
 	SCCB_WR_Byte(SCCB_ID);		
 	delay_us(100);	 
-  	SCCB_WR_Byte(reg);			
+  	SCCB_WR_Byte(reg);				  
 	delay_us(100);	  
 	SCCB_Stop();   
 	delay_us(100);	   

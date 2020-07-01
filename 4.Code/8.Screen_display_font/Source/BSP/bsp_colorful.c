@@ -7,7 +7,6 @@
 * @brief        
 * @details      
 * @par History  
-*                 
 * version:		liusen_20170717
 */
 
@@ -20,8 +19,6 @@
 * Function       bsp_Colorful_Control
 * @author        liusen
 * @date          2015.01.03    
-* @brief         
-* @param[in]     v_RedOnOff ,	v_GreenOnOff, v_BlueOnOff
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -61,11 +58,8 @@ void bsp_Colorful_Control(int v_RedOnOff, int v_GreenOnOff, int v_BlueOnOff)
 * Function       Motor_PWM_Init
 * @author        liusen
 * @date          2017.07.17    
-* @brief        
-* @param[in]     left motor arr£ºAutomatic reload value, psc:Clock prescaler ,right motor arr2£ºAutomatic reload value, psc2:Clock prescaler
-* @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void Colorful_PWM_Init(u16 arr, u16 psc, u16 arr2, u16 psc2, u16 arr3, u16 psc3 )
 {  
@@ -86,57 +80,58 @@ void Colorful_PWM_Init(u16 arr, u16 psc, u16 arr2, u16 psc2, u16 arr3, u16 psc3 
 	TIM_TimeBaseStructure.TIM_Prescaler = psc; 
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; 
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  
-	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
- 
+	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure); 
+
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1; 
  	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable; 
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High; 
 	TIM_OCInitStructure.TIM_Pulse = 0;
-	TIM_OC4Init(TIM3, &TIM_OCInitStructure);  
+	TIM_OC4Init(TIM3, &TIM_OCInitStructure); 
 	TIM_OC4PreloadConfig(TIM3, TIM_OCPreload_Enable);  
-	TIM_Cmd(TIM3, ENABLE); 
+	TIM_Cmd(TIM3, ENABLE);  
 	
 	//Green  PWM2  PB0
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);	
- 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB  | RCC_APB2Periph_AFIO, ENABLE); 
-
+ 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB  | RCC_APB2Periph_AFIO, ENABLE);  
+ 
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0; //TIM4_CH2
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
  
-	TIM_TimeBaseStructure.TIM_Period = arr2;
+	TIM_TimeBaseStructure.TIM_Period = arr2; 
 	TIM_TimeBaseStructure.TIM_Prescaler = psc2; 
 	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; 
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  
 	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure); 
-	 
-	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1; 
+	
+	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
  	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable; 
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High; 
 	TIM_OCInitStructure.TIM_Pulse = 0;
-	TIM_OC3Init(TIM3, &TIM_OCInitStructure); 
+	TIM_OC3Init(TIM3, &TIM_OCInitStructure);  
 	TIM_OC3PreloadConfig(TIM3, TIM_OCPreload_Enable);  
 	TIM_Cmd(TIM3, ENABLE);  
 
 	//Blue  PWM3  PA7
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);	
  	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA  | RCC_APB2Periph_AFIO, ENABLE);  
+ 
 
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7; //TIM4_CH2
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;  
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
  
-	TIM_TimeBaseStructure.TIM_Period = arr3; 
+	TIM_TimeBaseStructure.TIM_Period = arr3;
 	TIM_TimeBaseStructure.TIM_Prescaler = psc3; 
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; 
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  
 	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure); 
 	
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1; 
  	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable; 
-	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High; 
 	TIM_OCInitStructure.TIM_Pulse = 0;
 	TIM_OC2Init(TIM3, &TIM_OCInitStructure);  
 	TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable);  
@@ -147,11 +142,10 @@ void Colorful_PWM_Init(u16 arr, u16 psc, u16 arr2, u16 psc2, u16 arr3, u16 psc3 
 * Function       bsp_Colorful_RGB_PWM
 * @author        liusen
 * @date          2017.08.15    
-* @brief         color setting :256*256*256, Converted to 0-1000
 * @param[in]     v_RPWM : 0-255 
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void  bsp_Colorful_RGB_PWM(int v_RPWM, int v_GPWM, int v_BPWM)
 {

@@ -4,7 +4,6 @@
 * @author       liusen
 * @version      V1.0
 * @date         2017.08.18
-* @brief        
 * @details      
 * @par History  
 *                 
@@ -21,7 +20,6 @@
 
 u8 ProtocolString[80] = {0};
 int CarSpeedControl = 400;
-
 
 
 
@@ -50,11 +48,9 @@ int g_CarState = enSTOP;
 * Function       StringFind
 * @author        liusen
 * @date          2017.08.18    
-* @brief         
-* @param[in]     pSrc:Source string; pDst:Finded string v_iStartPos:The starting position of the source string
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 
 int StringFind(const char *pSrc, const char *pDst, int v_iStartPos)  
@@ -82,7 +78,6 @@ int StringFind(const char *pSrc, const char *pDst, int v_iStartPos)
 * Function       ProtocolCpyData
 * @author        liusen
 * @date          2017.08.18    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -98,11 +93,10 @@ void ProtocolCpyData(void)
 * Function       Protocol
 * @author        liusen
 * @date          2017.08.18    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void Protocol(void)
 {
@@ -151,7 +145,7 @@ void Protocol(void)
 			char m_skp[5] = {0};
 			memcpy(m_skp, ProtocolString + i + 3, ii - i -3);
 			
-			m_kp = atoi(m_skp);        
+			m_kp = atoi(m_skp);       
 
 			Angle_J1 = (180 - m_kp);
 
@@ -163,8 +157,8 @@ void Protocol(void)
 	
 	if (StringFind((const char *)ProtocolString, (const char *)"4WD", 0) == -1)
 	{
-
-//		if (ProtocolString[3] == '1')      
+//		
+//		if (ProtocolString[3] == '1')     
 //		{
 //			g_CarState = enTLEFT;
 //		}
@@ -195,16 +189,15 @@ void Protocol(void)
 			}
 		}
 
-		//Light judgment
-		if (ProtocolString[13] == '1')
+		if (ProtocolString[13] == '1') //white
 		{
 			bsp_Colorful_Control(1, 1, 1);
 		}
-		else if (ProtocolString[13] == '2')//red
+		else if (ProtocolString[13] == '2') //red
 		{
 			bsp_Colorful_Control(1, 0, 0);
 		}
-		else if (ProtocolString[13] == '3')//green
+		else if (ProtocolString[13] == '3') //green
 		{
 			bsp_Colorful_Control(0, 0, 1);
 		}
@@ -216,7 +209,6 @@ void Protocol(void)
 		{
 			bsp_Colorful_Control(0, 0, 0);
 		}
-
 
 		if (g_CarState != enTLEFT && g_CarState != enTRIGHT)
 		{
@@ -234,7 +226,6 @@ void Protocol(void)
 
 		newLineReceived = 0;  
 		memset(ProtocolString, 0x00, sizeof(ProtocolString));  
-
 
 		switch (g_CarState)
 		{

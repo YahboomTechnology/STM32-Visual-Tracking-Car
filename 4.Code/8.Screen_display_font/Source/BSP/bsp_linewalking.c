@@ -19,11 +19,8 @@
 * Function       bsp_GetLineWalking
 * @author        liusen
 * @date          2017.07.20    
-* @brief         
-* @param[in]     int *p_iL1, int *p_iL2, int *p_iR1, int *p_iR2 
-* @param[out]    
 * @return        void
-* @par History   
+* @par History   no
 */
 
 void bsp_GetLineWalking(int *p_iL1, int *p_iL2, int *p_iR1, int *p_iR2)
@@ -38,7 +35,6 @@ void bsp_GetLineWalking(int *p_iL1, int *p_iL2, int *p_iR1, int *p_iR2)
 * Function       bsp_GetLineWalking_Data
 * @author        liusen
 * @date          2017.07.20    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @return        1011,

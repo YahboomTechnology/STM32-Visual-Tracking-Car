@@ -17,11 +17,11 @@
 //*******************************************************************************/
 //void SYSTICK_Init(void)
 //{
-
+//	
 //	/* SysTick end of count event each 1ms with input clock equal to 3MHz (HCLK/8, default) */
 //	SysTick_SetReload(3000);
 //	#if 0
-
+//	
 //	else if(g_mcu_clk == MCU_HCLK_36)
 //	{
 //		printf("\r\nSysTick_SetReload(4500)");
@@ -67,13 +67,13 @@ void GPIO_Configuration(void)
 	GPIO_PinRemapConfig(GPIO_Remap_SWJ_JTAGDisable , ENABLE);
 	//OLED
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7;	 
- 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 
+ 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
- 	GPIO_Init(GPIOB, &GPIO_InitStructure);	 
+ 	GPIO_Init(GPIOB, &GPIO_InitStructure);	  
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9 |GPIO_Pin_0;	 
  	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
- 	GPIO_Init(GPIOC, &GPIO_InitStructure);	  
+ 	GPIO_Init(GPIOC, &GPIO_InitStructure);	 
 	GPIO_ResetBits(GPIOC,GPIO_Pin_0); 
 } ;
 
@@ -126,6 +126,7 @@ void GPIO_UserInit(void)
 //		/* PCLK1 = HCLK */
 //		RCC_PCLK1Config(RCC_HCLK_Div1);
 
+//		/* 时钟频率为24MHz的单片机 */
 //		/* PLLCLK = 8MHz / 2 * 6 = 24 MHz */
 //		RCC_PLLConfig(RCC_PLLSource_HSE_Div2, RCC_PLLMul_6);
 //		
@@ -151,7 +152,7 @@ void GPIO_UserInit(void)
 //	RCC_APB1PeriphClockCmd( RCC_APB1Periph_USART2, ENABLE);
 //	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1,ENABLE);
 //	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
-//	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);	 
+//	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);	
 //	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD|RCC_APB2Periph_GPIOG, ENABLE);
 //	/*Enable  ADC1 */
 //    RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1,ENABLE); 

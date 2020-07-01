@@ -26,7 +26,6 @@ extern void NVIC_Configuration(void);
 * Function       bsp_init
 * @author        liusen
 * @date          2015.01.03    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -36,14 +35,14 @@ void bsp_init(void)
 { 
 	Colorful_GPIO_Init();
 	MOTOR_GPIO_Init();  				
-	Servo_GPIO_Init();				    	
-	TIM1_Int_Init(9, 72);				
-	Uart1_init(115200);					
-	Angle_J1 = 90;						
+	Servo_GPIO_Init();				  
+	TIM1_Int_Init(9, 72);			
+	Uart1_init(115200);				
+	Angle_J1 = 90;					
 	delay_init();
 	NVIC_Configuration(); 	 
-	GPIO_UserInit();  
-	LCD_Init0();			
+	GPIO_UserInit();
+	LCD_Init0();		
 	ADC_GPIO_Init();
 	Adc_Init();
 	Ultrasonic_GPIO_Init();

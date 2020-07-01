@@ -1166,31 +1166,31 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-        40          8          0          0          0        812   app_motor.o
-       428          8          0          0          0       1393   app_ultrasonic.o
-        76          6          0          0          0        539   bsp.o
-       656         50          0          0          0      11008   bsp_adc.o
-       336         22          0          0          0       1162   bsp_gpio.o
-       116         18          0          0          0        727   bsp_oled.o
-         0          0          0          4          0        291   bsp_servo.o
-       404         50          0         12          0       1312   bsp_timer.o
-       680         16          0          4          0       2399   bsp_ultrasonic.o
-       212         18          0          4          0     206067   delay.o
-        48          6          0          8          0        811   main.o
-       220         22          0          0          0       1893   misc.o
-      2124         26       4349          0          0       7630   oled.o
-        64         26        236          0       1536        904   startup_stm32f10x_md.o
-      1102         26          0          0          0      10929   stm32f10x_adc.o
-       860         38          0          0          0       5737   stm32f10x_gpio.o
-       932         36          0         20          0       8964   stm32f10x_rcc.o
-      3610         88          0          0          0      22228   stm32f10x_tim.o
-      1032         22          0          0          0       8464   stm32f10x_usart.o
-        12          0          0          0          0        521   sys.o
-       480         38          0         20          0      50247   system_stm32f10x.o
-       680         42          0         24        280       4411   usart.o
+        40          8          0          0          0        784   app_motor.o
+       428          8          0          0          0       1365   app_ultrasonic.o
+        76          6          0          0          0        511   bsp.o
+       656         50          0          0          0      10952   bsp_adc.o
+       336         22          0          0          0       1134   bsp_gpio.o
+       116         18          0          0          0        699   bsp_oled.o
+         0          0          0          4          0        263   bsp_servo.o
+       404         50          0         12          0       1256   bsp_timer.o
+       680         16          0          4          0       2343   bsp_ultrasonic.o
+       212         18          0          4          0     205955   delay.o
+        48          6          0          8          0        755   main.o
+       220         22          0          0          0       1837   misc.o
+      2124         26       4349          0          0       7546   oled.o
+        64         26        236          0       1536        884   startup_stm32f10x_md.o
+      1102         26          0          0          0      10873   stm32f10x_adc.o
+       860         38          0          0          0       5681   stm32f10x_gpio.o
+       932         36          0         20          0       8880   stm32f10x_rcc.o
+      3610         88          0          0          0      22172   stm32f10x_tim.o
+      1032         22          0          0          0       8408   stm32f10x_usart.o
+        12          0          0          0          0        493   sys.o
+       480         38          0         20          0      50051   system_stm32f10x.o
+       680         42          0         24        280       4327   usart.o
 
     ----------------------------------------------------------------------
-     14116        566       4618         96       1816     348449   Object Totals
+     14116        566       4618         96       1816     347169   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          4          0          1          0          0          0   (incl. Padding)
 
@@ -1259,8 +1259,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     17562        846       4618         96       1912     347997   Grand Totals
-     17562        846       4618         96       1912     347997   ELF Image Totals
+     17562        846       4618         96       1912     346717   Grand Totals
+     17562        846       4618         96       1912     346717   ELF Image Totals
      17562        846       4618         96          0          0   ROM Totals
 
 ==============================================================================

@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Component Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'Camera vision tracking' 
+ * Project: 'Camera_vision_tracking' 
  * Target:  'Target 1' 
  */
 

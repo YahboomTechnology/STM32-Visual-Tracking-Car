@@ -3,11 +3,12 @@
 #include "stm32f10x.h"
 #include "stdlib.h"
 
+
 #define 	TYPE8X16		1
 #define 	TYPE16X16		2
 #define 	TYPE6X8			3
 
-//-------------------------------  					   
+//----------------------------  					   
 
 #define LCD_SCL_CLR()	GPIO_ResetBits(GPIOB,GPIO_Pin_6)
 #define LCD_SCL_SET()	GPIO_SetBits(GPIOB,GPIO_Pin_6)

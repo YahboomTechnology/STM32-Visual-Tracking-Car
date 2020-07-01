@@ -1,0 +1,70 @@
+*** Creating Trace Output File '.\output\TB6612FNG.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\output\startup_stm32f10x_md.o"'
+### List of Objects: adding '".\output\system_stm32f10x.o"'
+### List of Objects: adding '".\output\delay.o"'
+### List of Objects: adding '".\output\sys.o"'
+### List of Objects: adding '".\output\usart.o"'
+### List of Objects: adding '".\output\main.o"'
+### List of Objects: adding '".\output\app_motor.o"'
+### List of Objects: adding '".\output\app_linewalking.o"'
+### List of Objects: adding '".\output\app_iravoid.o"'
+### List of Objects: adding '".\output\app_lightseeking.o"'
+### List of Objects: adding '".\output\app_ultrasonic.o"'
+### List of Objects: adding '".\output\app_bluetooth.o"'
+### List of Objects: adding '".\output\app_buzzer.o"'
+### List of Objects: adding '".\output\app_colormode.o"'
+### List of Objects: adding '".\output\protocol.o"'
+### List of Objects: adding '".\output\bsp.o"'
+### List of Objects: adding '".\output\bsp_gpio.o"'
+### List of Objects: adding '".\output\bsp_motor.o"'
+### List of Objects: adding '".\output\bsp_servo.o"'
+### List of Objects: adding '".\output\bsp_timer.o"'
+### List of Objects: adding '".\output\bsp_colorful.o"'
+### List of Objects: adding '".\output\bsp_linewalking.o"'
+### List of Objects: adding '".\output\bsp_iravoid.o"'
+### List of Objects: adding '".\output\bsp_lightseeking.o"'
+### List of Objects: adding '".\output\bsp_ultrasonic.o"'
+### List of Objects: adding '".\output\bsp_adc.o"'
+### List of Objects: adding '".\output\bsp_buzzer.o"'
+### List of Objects: adding '".\output\bsp_fire.o"'
+### List of Objects: adding '".\output\bsp_gs.o"'
+### List of Objects: adding '".\output\misc.o"'
+### List of Objects: adding '".\output\stm32f10x_adc.o"'
+### List of Objects: adding '".\output\stm32f10x_bkp.o"'
+### List of Objects: adding '".\output\stm32f10x_can.o"'
+### List of Objects: adding '".\output\stm32f10x_cec.o"'
+### List of Objects: adding '".\output\stm32f10x_crc.o"'
+### List of Objects: adding '".\output\stm32f10x_dac.o"'
+### List of Objects: adding '".\output\stm32f10x_dbgmcu.o"'
+### List of Objects: adding '".\output\stm32f10x_dma.o"'
+### List of Objects: adding '".\output\stm32f10x_exti.o"'
+### List of Objects: adding '".\output\stm32f10x_flash.o"'
+### List of Objects: adding '".\output\stm32f10x_fsmc.o"'
+### List of Objects: adding '".\output\stm32f10x_gpio.o"'
+### List of Objects: adding '".\output\stm32f10x_i2c.o"'
+### List of Objects: adding '".\output\stm32f10x_iwdg.o"'
+### List of Objects: adding '".\output\stm32f10x_pwr.o"'
+### List of Objects: adding '".\output\stm32f10x_rcc.o"'
+### List of Objects: adding '".\output\stm32f10x_rtc.o"'
+### List of Objects: adding '".\output\stm32f10x_sdio.o"'
+### List of Objects: adding '".\output\stm32f10x_spi.o"'
+### List of Objects: adding '".\output\stm32f10x_tim.o"'
+### List of Objects: adding '".\output\stm32f10x_usart.o"'
+### List of Objects: adding '".\output\stm32f10x_wwdg.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 ".\output\startup_stm32f10x_md.o" ".\output\system_stm32f10x.o" ".\output\delay.o" ".\output\sys.o" ".\output\usart.o" ".\output\main.o" ".\output\app_motor.o" ".\output\app_linewalking.o" ".\output\app_iravoid.o" ".\output\app_lightseeking.o" ".\output\app_ultrasonic.o" ".\output\app_bluetooth.o" ".\output\app_buzzer.o" ".\output\app_colormode.o" ".\output\protocol.o" ".\output\bsp.o" ".\output\bsp_gpio.o" ".\output\bsp_motor.o" ".\output\bsp_servo.o" ".\output\bsp_timer.o" ".\output\bsp_colorful.o" ".\output\bsp_linewalking.o" ".\output\bsp_iravoid.o" ".\output\bsp_lightseeking.o" ".\output\bsp_ultrasonic.o" ".\output\bsp_adc.o" ".\output\bsp_buzzer.o" ".\output\bsp_fire.o" ".\output\bsp_gs.o" ".\output\misc.o" ".\output\stm32f10x_adc.o" ".\output\stm32f10x_bkp.o" ".\output\stm32f10x_can.o" ".\output\stm32f10x_cec.o" ".\output\stm32f10x_crc.o" ".\output\stm32f10x_dac.o" ".\output\stm32f10x_dbgmcu.o" ".\output\stm32f10x_dma.o" ".\output\stm32f10x_exti.o" ".\output\stm32f10x_flash.o" ".\output\stm32f10x_fsmc.o" ".\output\stm32f10x_gpio.o" ".\output\stm32f10x_i2c.o" ".\output\stm32f10x_iwdg.o" ".\output\stm32f10x_pwr.o" ".\output\stm32f10x_rcc.o" ".\output\stm32f10x_rtc.o" ".\output\stm32f10x_sdio.o" ".\output\stm32f10x_spi.o" ".\output\stm32f10x_tim.o" ".\output\stm32f10x_usart.o" ".\output\stm32f10x_wwdg.o" --library_type=microlib --strict --scatter ".\output\TB6612FNG.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\TB6612FNG.map" -o ".\output\TB6612FNG.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\output\TB6612FNG.axf'
+### ADS-LD Command File: '.\output\TB6612FNG.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\output\TB6612FNG.lnp', Handle=0x00000864
+### Writing '.lnp' file
+### ADS-LD Command file '.\output\TB6612FNG.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

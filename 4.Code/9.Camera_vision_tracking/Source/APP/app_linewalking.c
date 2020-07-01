@@ -29,14 +29,13 @@
 #include<math.h>
 
 
-#define dir_p     0.19 //p   0.2    0.18    //0.19    
-//If the linewalking effect is not good, you can modify dir_p and dir_d appropriately.
+#define dir_p     0.19 //p   0.2    0.18    //0.19 If the line inspection effect is not good, you can modify dir_ p and dir_ d appropriately
 #define dir_d     0.16//d  0.2       0.16   //0.16
 
 
-float fla_cha=0;    
-int offset,suducha;//offset is the current car has a deviation from the center line
-extern int speed;
+float fla_cha=0;    //
+int offset,suducha;//offset is the deviation of the current car from the center line
+extern int speed;//car speed
 
 
 /**
@@ -47,7 +46,7 @@ extern int speed;
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 
 
@@ -56,83 +55,84 @@ void app_LineWalking0(void)
 	
 }
 /*****************OV7670************************/
-extern u8 ov_sta;	//It is defined in the exit.c
+extern u8 ov_sta;	//
 extern int nextblack;
 int t=0;
 int fz=120,zhongzhi=80;
-//fz is image binarization threshold, zhongzhi is Median value of the car
-////If the linewalking effect is not good, you can modify fz and zhongzhi appropriately.
-u8 date[80][240]={0};//This array is the pixel point taken by the camera.
+u8 date[80][240]={0};    
 u8 black_line[80]={0};
-//After processing the data captured by the camera, find the black line on the ground and store it in this array.
-u8 dis_image[64][128]={0};////This array is the OLED display
-void UART1SendByte();
+u8 dis_image[64][128]={0};
+void UART1SendByte(unsigned char SendData);
 extern void LCD_PrintImage(u8 *pucTable, u16 usRowNum, u16 usColumnNum);
-//Display the image captured by the camera
 /**
 * Function       dis_play_image
 * @author        john
 * @date          2018.09.26    
-* @brief         //The image taken by the camera is 240*80 pixels, 
-*                //only 128*64 points are displayed here, we need to compress the data.
+* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
-void dis_play_image()
+void dis_play_image(void)
 {
   
     int i=0,j=0,n=0,m=0;
 		for(i=0;i<64;i++)
-			for(j=0;j<128;j++)//Clear the array
+			for(j=0;j<128;j++)
 			{
 				dis_image[i][j]=0;
 			}
      for(i=0,m=79;i<64;i++,m--) 
-			//The image captured by the camera uses only the first 80 lines in the code, 
-			//but the OLED can only display 64 lines, so here we need to extract 64 lines.
      {
-       for(j=0,n=0;j<240,n<=127;j++)
+       for(j=0,n=0;j<240;j++)
           {					
-            if(j<=56)//Show one point every two points in the first 112 pixels
+            if(j<=56)
             {
                 if(j%2==0)
                 {
                    if(date[m][j]>=fz)
                      dis_image[i][n]=1;
-                     n++;
+									 if(n<=127)
+										{
+											n++;
+										}		
                 }
             
             }
-						else if(j>56&&j<=72)//16 pixels in the middle are displayed in the last 112 pixels
+						else if(j>56&&j<=72)
             {
                if(date[m][j]>=fz)
                   dis_image[i][n]=1;
-                   n++; 
+							 if(n<=127)
+								{
+									n++;
+								}		
             }
             else
             {
-             if(j%2==0)//Show one point every two points
+             if(j%2==0)
               {
                  if(date[m][j]>=fz)
                     dis_image[i][n]=1;
-                    n++;
+								 if(n<=127)
+									{
+										n++;
+									}		
               }
             }   
           }
       }
-   LCD_PrintImage((u8*)dis_image, 64, 128);//Data display on the OLED
+   LCD_PrintImage((u8*)dis_image, 64, 128);
 }
 /**
 * Function       dir
 * @author        john
-* @date          2018.10.8    
-* @brief         servo steering
+* @date          2018.10.8     
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   NO
+* @par History   
 */
 void dir()
 {	
@@ -142,8 +142,8 @@ void dir()
   fla_cha=offset;
   dir_out=fla_cha*dir_p;                 //p
   dir_out+=(fla_cha-fla_cha_old)*dir_d;  //d 
-	suducha=abs(offset);//Adjust the speed according to the steering size of the servo (the size of the curve)
-	speed=(65 -suducha/8);//Speed can be modified by yourself
+	suducha=abs(offset);
+	speed=(65 -suducha/8);//3500 70   
   dir_out+=zhongzhi;
 	if(dir_out>110)
 		dir_out=110;
@@ -155,38 +155,35 @@ void dir()
 * Function       find_line
 * @author        john
 * @date          2018.10.8    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
  
-* @par History   no
+* @par History   
 */
-void find_line()
+void find_line(void)
 {
-	int i,j,black,line,d,zhijiao,last,a,b,c,q;
+	int i,j,black,line,last,q;//d,zhijiao,a,b,c,
 	q=0;
-	for(i=0;i<80;i++)//Search center line of track
+	for(i=0;i<80;i++)
 		{
-			for(j=0;j<240;j++)//Search black line from left to right 
+			for(j=0;j<240;j++)
 				{
-					if((j+4) < 240 && date[i][j] < fz && date[i][j+4] < fz)//Think of a black line when two consecutive black dots are found
+					if((j+4) < 240 && date[i][j] < fz && date[i][j+4] < fz)
 						{		
-							if((j-nextblack > 90)||(nextblack-j > 90))//When the black point found is very different from the previous black point, we need to judge whether it is a clutter.
+							if((j-nextblack > 90)||(nextblack-j > 90))
 								{
-									last=j;//Record this black dots
+									last=j;
 									for(j=0;j<236;j++)
 										{	
-												if( (i+5) < 80 && date[i+5][j] < fz && date[i+5][j+4] < fz)//Determine if the black point in the first five lines deviates from this point
+												if( (i+5) < 80 && date[i+5][j] < fz && date[i+5][j+4] < fz)
 														{		
-															if((j-last>90)||(last-j>90))//The difference between the first five lines and this point is very large, 
-																                         //which means that it is clutter, then this is filtered out. 
-															                           //The x coordinate of this point is consistent with the previous one.
+															if((j-last>90)||(last-j>90))
 																{
 																	black=nextblack;
 																	break;
 																}
-															else 		////Not clutter
+															else 		
 																{
 																	black=j+1;
 																	nextblack=black;
@@ -198,7 +195,7 @@ void find_line()
 										}
 										break;
 								}
-								else//This is a black line
+								else
 									{
 										black=j+1;
 										nextblack=black;
@@ -208,29 +205,24 @@ void find_line()
 						}
 								
 						
-						if(j==238)//When the 238 line is found or the black line is not found, 
-							        //it means that there is no black line in the this line, 
-						          //then, the x coordinate of this point is also used in the previous line.
+						if(j==238)
 						{
 							q=1;
 						}
 						
 				}
-				if(black==1)//When the first point is a black line, we need to find the right side of the black line
+				if(black==1)
 					{
 					for(j=0;j<236;j++)
 						{
-						if(date[i][j] > fz && date[i][j+4] > fz)//Find two consecutive white spots					
+						if(date[i][j] > fz && date[i][j+4] > fz)		
 							{		
-									if((j-nextblack>70)||(nextblack-j>70))// When the white point found is very different from the previous black point,
-										                                    //we need to judge whether it is a clutter.
+									if((j-nextblack>70)||(nextblack-j>70))
 										{
 											last=j;
 											for(j=0;j<236;j++)
 												{	
-													if((i+5) < 80 && date[i+5][j] > fz && date[i+5][j+4] > fz)//The difference between the first five lines and this point is very large, 
-																                                                    //which means that it is clutter, then this is filtered out. 
-															                                                      //The x coordinate of this point is consistent with the previous one.
+													if((i+5) < 80 && date[i+5][j] > fz && date[i+5][j+4] > fz)
 													{		
 																	if((j-last>70)||(last-j>70))
 																		{
@@ -259,53 +251,49 @@ void find_line()
 								}
 						}
 					}		
-				if(q==1)//If no line is found, take the value of the previous line
+				if(q==1)
 					black=nextblack;
 					black_line[i]=black;			
 		}		
 		line=(black_line[0]+black_line[10]+black_line[20]+black_line[30]+black_line[50])/5;
-		                          //Take the 5 values in the center line as the current position of the car
 		if(t==1)
 			{
-				offset=(line-zhongzhi);//The line found is the left side of the ground black tape
+				offset=(line-zhongzhi);
 			}
 		else
 			{
 				
 				offset=(line-zhongzhi-60);
-				//The line found is the right side of the ground black tape, so you need to subtract 690, 
-				//60 is the width of the tape, and the left side of the tape is taken as the benchmark.
 			}	
 }
 /**
 * Function       senddate
 * @author        john
 * @date          2018.10.8    
-* @brief         Send the data to the host computer and display it
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void senddate()
 {
-	u16 a, b,c;
+	u16 a, b;//,c;
 	for(a=0;a<80;a++)
 		for(b=240;b>0;b--)
 		{
 			UART1SendByte(date[a][b]);
 		}	
-		UART1SendByte(0xff);//The data in the host computer protocol ends with 0xFF
+		UART1SendByte(0xff);
 }
 
-//Setting frequency
+
 void ov7670_clock_set(u8 PLL) 
 { 
 	u8 temp=0;	  
 	RCC->CFGR&=0XFFFFFFFC;	
 	RCC->CR&=~0x01000000;  	  
 	RCC->CFGR&=~(0XF<<18);	
-	PLL-=2; 
+	PLL-=2;
 	RCC->CFGR|=PLL<<18;   	
 	RCC->CFGR|=1<<16;	  	//PLLSRC ON  
 	FLASH->ACR|=0x12;	   
@@ -322,24 +310,23 @@ void ov7670_clock_set(u8 PLL)
 /**
 * Function       camera_refresh
 * @author        john
-* @date          2018.10.8    
-* @brief         Camera image acquisition
+* @date          2018.10.8       
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
-void camera_refresh()
+void camera_refresh(void)
 {
 	u32 i,j;
 	u8 color;
 	if(ov_sta==2)
 	{
-		OV7670_RRST=0;				//Start resetting the read pointer
+		OV7670_RRST=0;				
 		OV7670_RCK_L;
 		OV7670_RCK_H;
 		OV7670_RCK_L;
-		OV7670_RRST=1;				//Reset read pointer end
+		OV7670_RRST=1;				
 		OV7670_RCK_H;  
 		if(ov7670_config.mode)
 		{
@@ -348,12 +335,12 @@ void camera_refresh()
 					for(j=0; j<320; j++)//ov7670_config.width
 					{
 						OV7670_RCK_L;
-					   //color = (((GPIOB->IDR&0XFFFF)>>12)&0x0f)|(((GPIOC->IDR&0XFFFF)>>2)&0xF0);	//Read data
+					//	color = (((GPIOB->IDR&0XFFFF)>>12)&0x0f)|(((GPIOC->IDR&0XFFFF)>>2)&0xF0);	
 						color = (((GPIOB->IDR&0XFF00)>>8)&0xff);
 						OV7670_RCK_H;
-						OV7670_RCK_L;// YUYV is set OUT,The second byte is not used, so there is no need to read
+						OV7670_RCK_L;
 						OV7670_RCK_H;
-						if((j>=50 && j<130) && (i>=0 && i<240))//80*240	
+						if((j>=50 && j<130) && (i>=1 && i<240))//80*240	
 						{	
 								date[j-50][i-0]=color;
 						} 
@@ -361,8 +348,8 @@ void camera_refresh()
 				}
 		}		
 			
-		EXTI_ClearITPendingBit(EXTI_Line8);  //Clear interrupt flag of LINE8
-		ov_sta=0;					                   //Start next acquisition
+		EXTI_ClearITPendingBit(EXTI_Line8);  
+		ov_sta=0;					
 	} 
 }	
 
@@ -370,17 +357,16 @@ void camera_refresh()
 * Function       app_LineWalking
 * @author        john
 * @date          2018.10.8    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void app_LineWalking(void)
 {
-		camera_refresh();//Update camera information
-		find_line();     //Processing camera data
-		dis_play_image();//Display image on the OLED
-		dir();           //SERVO
+		camera_refresh();
+		find_line();
+		dis_play_image();
+		dir();
 		MiniCar_Run(speed);
 }

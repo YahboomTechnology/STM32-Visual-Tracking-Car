@@ -22,7 +22,6 @@
 * Function       bsp_GS_Init
 * @author        liusen
 * @date          2017.08.17    
-* @brief         
 * @param[in]     void
 * @param[out]    void
 * @retval        void
@@ -38,12 +37,11 @@ void bsp_GS_Init(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA | RCC_APB2Periph_ADC1 , ENABLE ); 
 	RCC_ADCCLKConfig(RCC_PCLK2_Div6); 
 
-
 	GPIO_InitStructure.GPIO_Pin =GPIO_Pin_1;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
 	GPIO_Init(GPIOA, &GPIO_InitStructure); 
 	
-	ADC_DeInit(ADC1); 
+	ADC_DeInit(ADC1);
 	ADC_InitStructure.ADC_Mode = ADC_Mode_Independent; 
 	ADC_InitStructure.ADC_ScanConvMode = DISABLE; 
 	ADC_InitStructure.ADC_ContinuousConvMode = DISABLE; 
@@ -54,7 +52,7 @@ void bsp_GS_Init(void)
 	ADC_Cmd(ADC1, ENABLE); 
 	ADC_ResetCalibration(ADC1); 
 	while(ADC_GetResetCalibrationStatus(ADC1)); 
-	ADC_StartCalibration(ADC1); 
+	ADC_StartCalibration(ADC1);
 	while(ADC_GetCalibrationStatus(ADC1)); 
 #endif
 }
@@ -62,18 +60,16 @@ void bsp_GS_Init(void)
 * Function       Get_Adc
 * @author        liusen
 * @date          2017.08.17     
-* @brief         
-* @param[in]     ch: 0~3
 * @param[out]    void
 * @retval        void
-* @par History  
+* @par History   
 */
 
 static u16 Get_Adc(u8 ch)
 {
-	
+
 	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_239Cycles5 );
-	
+
 	ADC_SoftwareStartConvCmd(ADC1, ENABLE); 
 	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC ));
 	return ADC_GetConversionValue(ADC1); 
@@ -83,8 +79,6 @@ static u16 Get_Adc(u8 ch)
 * Function       Get_Adc_Average
 * @author        liusen
 * @date          2017.08.17    
-* @brief         
-* @param[in]     ch:0~3 ; times
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -106,8 +100,6 @@ static u16 Get_Adc_Average(u8 ch, u8 times)
 * Function       Get_GS_Value
 * @author        liusen
 * @date          2017.08.17  
-* @brief         
-* @param[in]     ch:0~3 ; times.
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -115,7 +107,7 @@ static u16 Get_Adc_Average(u8 ch, u8 times)
 int Get_GS_Value(void)
 {
 	u16 adcx;
-	
+
 	GPIO_InitTypeDef GPIO_InitStructure;
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA , ENABLE ); 
 

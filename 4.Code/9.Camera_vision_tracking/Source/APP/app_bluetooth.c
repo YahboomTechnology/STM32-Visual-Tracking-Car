@@ -4,7 +4,7 @@
 * @author       liusen
 * @version      V1.0
 * @date         2015.01.03
-* @brief        
+* @brief       
 * @details      
 * @par History  
 *                 
@@ -31,18 +31,18 @@
 
 
 float Distance_test(void);
-float bsp_getUltrasonicDistance0();
+float bsp_getUltrasonicDistance0(void);
 int g_modeSelect = 0;  
 u8 g_Boolfire = 0;	    
 
 
 void serial_data_postback()
 {
+	//$4WD,CSB120,PV8.3,GS214,LF1011,HW11,GM11#
 	float csbLen=0.0f, power; 
 	u16 gs=0, lf=0; 
 	u8 hw=0, gm=0;
-	int Ll1=0, Rr1=0;
-
+//	int Ll1=0, Rr1=0;
 	csbLen= bsp_getUltrasonicDistance0();
 	if(csbLen>500)
 		csbLen=0;
@@ -66,7 +66,7 @@ void serial_data_postback()
 * @param[in]     void
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void app_bluetooth_deal(void)
 {
@@ -75,14 +75,15 @@ void app_bluetooth_deal(void)
 		Protocol();
 	}
 
+
 	switch (g_modeSelect)
 	{
 		case 1: break; 								
 		case 2: app_LineWalking(); break; 			
-		case 3: app_ultrasonic_mode0();  break;  	
+		case 3: app_ultrasonic_mode0();  break;  
 		default:break;
 	}
-
+	
 	if (g_modeSelect == 0 && g_Boolfire == 0)
 	{
 		if (g_count >= 100000)

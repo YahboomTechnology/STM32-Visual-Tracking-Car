@@ -4,9 +4,6 @@
 * @author       liusen
 * @version      V1.0
 * @date         2017.07.21
-* @brief        
-* @details      
-* @par History 
 *                 
 * version:	liusen_20170717
 */
@@ -24,9 +21,10 @@ unsigned int overcount = 0;
 * @author        liusen
 * @date          2017.07.20    
 * @brief         
+* @param[in]     void
 * @param[out]    void
-* @return       
-* @par History  
+* @return        
+* @par History   
 */
 
 float bsp_getUltrasonicDistance0(void)
@@ -38,13 +36,13 @@ float bsp_getUltrasonicDistance0(void)
 	while(i != 5)
 	{
 		GPIO_SetBits(TRIG_PORT, TRIG_PIN);  
-		delay_us(20);  						
+		delay_us(20);  					//>10us
 		GPIO_ResetBits(TRIG_PORT, TRIG_PIN);
 
 		while(GPIO_ReadInputDataBit(ECHO_PORT, ECHO_PIN) == RESET);
 		TIM_Cmd(TIM2,ENABLE);
 		
-		i+=1; 
+		i+=1;
 		while(GPIO_ReadInputDataBit(ECHO_PORT, ECHO_PIN) == SET);
 		TIM_Cmd(TIM2, DISABLE);
 		
@@ -53,8 +51,8 @@ float bsp_getUltrasonicDistance0(void)
 		length = (tim + overcount * 1000) / 58.0;
 		
 		sum = length + sum;
-		TIM2->CNT = 0; 
-		overcount = 0;  
+		TIM2->CNT = 0;  
+		overcount = 0; 
 		delay_ms(1);
 	}
 	length = sum / 5;
@@ -64,11 +62,9 @@ float bsp_getUltrasonicDistance0(void)
 /**
 * Function       bsp_Ultrasonic_Timer2_Init
 * @author        liusen
-* @date          2017.07.21    
-* @brief         
+* @date          2017.07.21         
 * @param[in]     void
 * @param[out]    void
-* @return        
 * @par History   
 */
 
@@ -80,6 +76,7 @@ void bsp_Ultrasonic_Timer2_Init(void)
 
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
 	
+
 	TIM_DeInit(TIM2);
 	TIM_TimeBaseInitStructer.TIM_Period = 999;
 	TIM_TimeBaseInitStructer.TIM_Prescaler = 71; 
@@ -114,7 +111,7 @@ float bsp_getUltrasonicDistance(void)
 	float distance = 0;
 	u16 tim;
 	GPIO_SetBits(TRIG_PORT, TRIG_PIN);  
-	delay_us(20);  						
+	delay_us(20);  					
 	GPIO_ResetBits(TRIG_PORT, TRIG_PIN);
 
 	while(GPIO_ReadInputDataBit(ECHO_PORT, ECHO_PIN) == RESET);
@@ -138,12 +135,9 @@ float bsp_getUltrasonicDistance(void)
 * Function       bubble
 * @author        Danny
 * @date          2017.08.16
-* @brief         
-* @param[in1]   
-* @param[in2]    
 * @param[out]    void
 * @retval        void
-* @par History   no
+* @par History   
 */
 void bubble(unsigned long *a, int n)
 
@@ -166,18 +160,18 @@ void bubble(unsigned long *a, int n)
 /**
 * Function       Distane_test
 * @author        Danny
-* @date          2017.08.16 
+* @date          2017.08.16
 * @param[in]     void
 * @param[out]    void
 * @retval        float:distance
-* @par History   no
+* @par History   
 */
 float Distance_test(void)
 {
   float Distance;
   unsigned long ultrasonic[5] = {0};
-  int a,num = 0;
-	int lastDistance;
+  int num = 0;
+//	int lastDistance;
   while (num < 5)
   {
      Distance = bsp_getUltrasonicDistance();
@@ -185,11 +179,12 @@ float Distance_test(void)
 	 {
 		 Distance = bsp_getUltrasonicDistance();
 	 }
+//	 
 //	 while((int)Distance == -1)
 //	 {
 //		 Distance = bsp_getUltrasonicDistance();
 //	 }
-
+   
    /* while ( (~(Distance >= 500 || (int)Distance == 0)) && a<5)
     {
          Distance = bsp_getUltrasonicDistance();

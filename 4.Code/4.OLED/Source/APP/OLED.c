@@ -607,7 +607,7 @@ void LCD_Init0(void)
   LCD_WrCmd(0xa4);// Disable Entire Display On (0xa4/0xa5)
   LCD_WrCmd(0xa6);// Disable Inverse Display On (0xa6/a7) 
   LCD_WrCmd(0xaf);//--turn on oled panel
-  LCD_Fill0(0x00);  //≥ı º«Â∆¡
+  LCD_Fill0(0x00);  
   LCD_Set_Pos(0,0);  
 	
 } 
