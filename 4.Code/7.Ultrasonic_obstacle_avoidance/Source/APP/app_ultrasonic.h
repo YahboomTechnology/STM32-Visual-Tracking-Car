@@ -6,7 +6,7 @@
 * @date         2015.01.03
 * @brief        
 * @details      
-* @par History 
+* @par History  
 *                 
 * version:	liusen_20170717
 */

@@ -16,7 +16,6 @@
 #include "delay.h"
 
 
-/*Record the number of timer overflows*/
 unsigned int overcount = 0;
 
 
@@ -24,11 +23,11 @@ unsigned int overcount = 0;
 * Function       bsp_getUltrasonicDistance
 * @author        liusen
 * @date          2017.07.20    
-* @brief         Get the distance of the ultrasonic
+* @brief        
 * @param[in]     void
 * @param[out]    void
-* @return        Distance floating point value
-* @par History   no
+* @return        
+* @par History   
 */
 
 float bsp_getUltrasonicDistance0(void)
@@ -37,28 +36,27 @@ float bsp_getUltrasonicDistance0(void)
 	u16 tim;
 	unsigned int  i = 0;
 
-	/*Calculate the average value of five times*/
+	
 	while(i != 5)
 	{
-		GPIO_SetBits(TRIG_PORT, TRIG_PIN);  //Pull up the signal as a trigger signal
-		delay_us(20);  						//High level signal at least exceeds 10US
+		GPIO_SetBits(TRIG_PORT, TRIG_PIN);  
+		delay_us(20);  						
 		GPIO_ResetBits(TRIG_PORT, TRIG_PIN);
 
-		/*Waiting for the echo signal*/
 		while(GPIO_ReadInputDataBit(ECHO_PORT, ECHO_PIN) == RESET);
-		TIM_Cmd(TIM2,ENABLE);//The echo signal arrives and the timer count is turned on.
+		TIM_Cmd(TIM2,ENABLE);
 		
-		i+=1; //Every time an echo signal is received, 1 is added, and the average is calculated five times.
-		while(GPIO_ReadInputDataBit(ECHO_PORT, ECHO_PIN) == SET);//Echo signal disappears
-		TIM_Cmd(TIM2, DISABLE);//Colse timers
+		i+=1; 
+		while(GPIO_ReadInputDataBit(ECHO_PORT, ECHO_PIN) == SET);
+		TIM_Cmd(TIM2, DISABLE);
 		
-		tim = TIM_GetCounter(TIM2);//Get the count value in the TIM2 register and calculate the time of the reverberation signal
+		tim = TIM_GetCounter(TIM2);
 		
-		length = (tim + overcount * 1000) / 58.0;//count distance
+		length = (tim + overcount * 1000) / 58.0;
 		
 		sum = length + sum;
-		TIM2->CNT = 0;  //Clear the count value in the TIM2 count register
-		overcount = 0;  //Interrupt overflow count is cleared
+		TIM2->CNT = 0;  
+		overcount = 0;  
 		delay_ms(1);
 	}
 	length = sum / 5;
@@ -72,8 +70,8 @@ float bsp_getUltrasonicDistance0(void)
 * @brief         
 * @param[in]     void
 * @param[out]    void
-* @return        
-* @par History   
+* @return       
+* @par History  
 */
 
 void bsp_Ultrasonic_Timer2_Init(void)
@@ -83,8 +81,7 @@ void bsp_Ultrasonic_Timer2_Init(void)
 
 
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-	
-	
+
 	TIM_DeInit(TIM2);
 	TIM_TimeBaseInitStructer.TIM_Period = 999;
 	TIM_TimeBaseInitStructer.TIM_Prescaler = 71; 
@@ -94,7 +91,6 @@ void bsp_Ultrasonic_Timer2_Init(void)
 	
 	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
 
-	
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	
 	NVIC_InitStructer.NVIC_IRQChannelPreemptionPriority = 0;
@@ -118,20 +114,32 @@ void TIM2_IRQHandler(void)
 float bsp_getUltrasonicDistance(void)
 {
 	float distance = 0;
-	u16 tim;
-	GPIO_SetBits(TRIG_PORT, TRIG_PIN);  
-	delay_us(20);  						
+	u16 tim,count;
+	GPIO_SetBits(TRIG_PORT, TRIG_PIN); 
+	delay_us(20);  					
 	GPIO_ResetBits(TRIG_PORT, TRIG_PIN);
 
 	while(GPIO_ReadInputDataBit(ECHO_PORT, ECHO_PIN) == RESET);
 	TIM_Cmd(TIM2,ENABLE);
 		
-	while(GPIO_ReadInputDataBit(ECHO_PORT, ECHO_PIN) == SET);
+	while(GPIO_ReadInputDataBit(ECHO_PORT, ECHO_PIN) == SET)
+	{
+		
+		count = overcount;
+		if(count >= 30)   //
+		{
+			TIM_Cmd(TIM2, DISABLE);
+			TIM2->CNT = 0;  
+			overcount = 0; 
+			return 0;
+			
+		}
+	}
 	TIM_Cmd(TIM2, DISABLE);
 		
 	tim = TIM_GetCounter(TIM2);
-		
-	distance = (tim + overcount * 1000) / 58.0;
+	count = overcount;	
+	distance = (tim + count * 1000) / 58.0;
 		
 	TIM2->CNT = 0;  
 	overcount = 0;  
@@ -144,12 +152,12 @@ float bsp_getUltrasonicDistance(void)
 * Function       bubble
 * @author        Danny
 * @date          2017.08.16
-* @brief         Ultrasonic measurement of five times of data for bubble sorting
-* @param[in1]    a:Ultrasonic array first address
-* @param[in2]    n:Size of ultrasonic array 
+* @brief         
+* @param[in1]    
+* @param[in2]    
 * @param[out]    void
 * @retval        void
-* @par History   NO
+* @par History  
 */
 void bubble(unsigned long *a, int n)
 
@@ -173,81 +181,32 @@ void bubble(unsigned long *a, int n)
 * Function       Distane_test
 * @author        Danny
 * @date          2017.08.16
-* @brief         Ultrasonic measurement of five times of data, 
-                 remove the maximum and minimum values, 
-                 and then take the average to improve the accuracy of the test
+* @brief         
 * @param[in]     void
 * @param[out]    void
-* @retval        float:distance
-* @par History   NO
+* @retval        
+* @par History   
 */
 float Distance_test(void)
 {
   float Distance;
   unsigned long ultrasonic[5] = {0};
-  int a,num = 0;
-	int lastDistance;
+  int num = 0;
+
   while (num < 5)
   {
      Distance = bsp_getUltrasonicDistance();
-			 while(((int)Distance >= 500 || (int)Distance == 0))
+	 while(((int)Distance >= 500 || (int)Distance == 0))
 	 {
 		 Distance = bsp_getUltrasonicDistance();
 	 }
 
-//	 while((int)Distance == -1)
-//	 {
-//		 Distance = bsp_getUltrasonicDistance();
-//	 }
- 
-   /* while ( (~(Distance >= 500 || (int)Distance == 0)) && a<5)
-    {
-         Distance = bsp_getUltrasonicDistance();
-				 a++;
-    }
-		if(Distance >= 500 || (int)Distance == 0)
-		{
-			Distance=lastDistance;
-		}*/
-//		if(Distance<500&&Distance>0)
-//		{
-//			lastDistance=Distance;
-//		}
-//		if(Distance >= 500 || (int)Distance == 0)
-//			{
-//				Distance = 2;
-//				//Distance = bsp_getUltrasonicDistance();
-//			}
-//		if(Distance >= 500 || (int)Distance == 0)
-//		{
-//			Distance = bsp_getUltrasonicDistance();
-//			if(Distance >= 500 || (int)Distance == 0)
-//			{
-//				Distance = bsp_getUltrasonicDistance();
-//				if(Distance >= 500 || (int)Distance == 0)
-//				{
-//					//Distance = 2;
-//					Distance = bsp_getUltrasonicDistance();
-//					if(Distance >= 500 || (int)Distance == 0)
-//					{
-//						//Distance = 2;
-//						Distance = bsp_getUltrasonicDistance();
-//						if(Distance >= 500 || (int)Distance == 0)
-//						{
-//							//Distance = 2;
-//							Distance = bsp_getUltrasonicDistance();
-//						}
-//					}
-//				}
-//			}
-//		}
-			if(Distance >0 || (int)Distance <500)
-			{
-				ultrasonic[num] = Distance;
-				//lastDistance=Distance;
-				num++;
-				delay_ms(10);
-			}
+	if(Distance >0 || (int)Distance <500)
+	{
+		ultrasonic[num] = Distance;
+		num++;
+		delay_ms(10);
+	}
   
   }
   num = 0;

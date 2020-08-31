@@ -11,6 +11,8 @@
 
 void bsp_init(void);
 
+
+
 #define USE_SERVO_J1
 //#define USE_SERVO_J2
 //#define USE_SERVO_J3
@@ -32,7 +34,6 @@ void bsp_init(void);
 #define USE_COLOR_RED
 #define USE_COLOR_GREEN
 #define USE_COLOR_BLUE
-
 
 #define USE_LIGHTSEEKING_L1
 #define USE_LIGHTSEEKING_R1

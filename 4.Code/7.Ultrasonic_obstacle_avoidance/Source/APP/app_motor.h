@@ -4,7 +4,7 @@
 * @author       liusen
 * @version      V1.0
 * @date         2015.01.03
-* @brief        Car motion control function
+* @brief        
 * @details      
 * @par History  
 *                 

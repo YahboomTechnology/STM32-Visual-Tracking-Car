@@ -4,7 +4,7 @@
 * @author       liusen
 * @version      V1.0
 * @date         2017.07.17
-* @brief        Timer
+* @brief        
 * @details      
 * @par History  
 *                 
@@ -24,11 +24,11 @@ extern int run;
 * Function       TIM1_Int_Init
 * @author        liusen
 * @date          2015.01.03    
-* @brief         Timer 1 initialization interface
-* @param[in]     arr£ºAutomatic reload value sc£ºClock prescaler
+* @brief         
+* @param[in]     arr£ºpsc
 * @param[out]    void
 * @retval        void
-* @par History   Clock selection is twice that of APB1,  APB1 is 36M
+* @par History   
 */
 void TIM1_Int_Init(u16 arr,u16 psc)
 {
@@ -37,19 +37,19 @@ void TIM1_Int_Init(u16 arr,u16 psc)
 
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_TIM1, ENABLE); 
 	
-	//  TIM1_Int_Init
+
 	TIM_TimeBaseStructure.TIM_Period = arr; 
-	TIM_TimeBaseStructure.TIM_Prescaler = (psc-1); //Set the prescaler value is used to the TIMx clock frequency divisor
-	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; //TDTS = Tck_tim   //36Mhz
+	TIM_TimeBaseStructure.TIM_Prescaler = (psc-1); 
+	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1; 
 	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;  
-	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;     //Turn off repeat count
+	TIM_TimeBaseStructure.TIM_RepetitionCounter = 0;    
 	TIM_TimeBaseInit(TIM1, &TIM_TimeBaseStructure); 
  
-	TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE ); 
+	TIM_ITConfig(TIM1, TIM_IT_Update, ENABLE );
 
-	//Interrupt priority NVIC settings
+
 	NVIC_InitStructure.NVIC_IRQChannel = TIM1_UP_IRQn;  
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; 
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;  
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; 
 	NVIC_Init(&NVIC_InitStructure);  
@@ -61,11 +61,11 @@ void TIM1_Int_Init(u16 arr,u16 psc)
 * Function       TIM1_Int_Init
 * @author        liusen
 * @date          2015.01.03    
-* @brief         Timer1 interrupt service program: mainly controls the servo, 10khz counting frequency, counting to 10 means 10us.
-* @param[in]     arr£ºAutomatic reload value  £psc£ºClock prescaler
+* @brief         
+* @param[in]     
 * @param[out]    void
 * @retval        void
-* @par History   Clock selection is twice that of APB1,  APB1 is 36M   
+* @par History   
 */
 
 
@@ -87,17 +87,73 @@ void TIM1_UP_IRQHandler(void)
 		#ifdef USE_SERVO_J1
 		if(num <= (Angle_J1 * 11 + 500)/10)
 		{
-			GPIO_SetBits(Servo_J1_PORT, Servo_J1_PIN );		//Give the servo interface a high level
+			GPIO_SetBits(Servo_J1_PORT, Servo_J1_PIN );		
 		}
 		else
 		{
-			GPIO_ResetBits(Servo_J1_PORT, Servo_J1_PIN );		//Give the servo interface a low level
+			GPIO_ResetBits(Servo_J1_PORT, Servo_J1_PIN );		
 		}
 		#endif	   	
-	
+
+		#ifdef USE_SERVO_J2
+		if(num <= (Angle_J2 * 11 + 500)/10)
+		{
+			GPIO_SetBits(Servo_J2_PORT, Servo_J2_PIN );		
+		}
+		else
+		{
+			GPIO_ResetBits(Servo_J2_PORT, Servo_J2_PIN );		
+		}
+		#endif
+
+		#ifdef USE_SERVO_J3
+
+		if(num <= (Angle_J3 * 11 + 500)/10)
+		{
+			GPIO_SetBits(Servo_J3_PORT, Servo_J3_PIN );		
+		}
+		else
+		{
+			GPIO_ResetBits(Servo_J3_PORT, Servo_J3_PIN );		
+		}
+		#endif
+
+		#ifdef USE_SERVO_J4
+		if(num <= (Angle_J4 * 11 + 500)/10)
+		{
+			GPIO_SetBits(Servo_J4_PORT, Servo_J4_PIN );		
+		}
+		else
+		{
+			GPIO_ResetBits(Servo_J4_PORT, Servo_J4_PIN );		
+		}
+		#endif
+
+		#ifdef USE_SERVO_J5
+		if(num <= (Angle_J5 * 11 + 500)/10)
+		{
+			GPIO_SetBits(Servo_J5_PORT, Servo_J5_PIN );		
+		}
+		else
+		{
+			GPIO_ResetBits(Servo_J5_PORT, Servo_J5_PIN );		
+		}
+		#endif
+
+		#ifdef USE_SERVO_J6
+		if(num <= (Angle_J6 * 11 + 500)/10)
+		{
+			GPIO_SetBits(Servo_J6_PORT, Servo_J6_PIN );		
+		}
+		else
+		{
+			GPIO_ResetBits(Servo_J6_PORT, Servo_J6_PIN );		
+		}
+		#endif
+		
 		if(run==1)
 		{
-			if(num <= speed2)//motor forward
+			if(num <= speed2)
 			{
 				M1A=0;
 				M1B=1;
@@ -106,7 +162,7 @@ void TIM1_UP_IRQHandler(void)
 			}
 			else
 			{
-				M1A=0;//motor stop
+				M1A=0;
 				M1B=0;
 				M2A=0;
 				M2B=0;
@@ -115,7 +171,7 @@ void TIM1_UP_IRQHandler(void)
 		
 		if(run==0)
 		{
-			if(num <= speed2)//motor  reverse
+			if(num <= speed2)
 			{
 				M1A=1;
 				M1B=0;
@@ -124,14 +180,14 @@ void TIM1_UP_IRQHandler(void)
 			}
 			else
 			{
-				M1A=0;//motor stop
+				M1A=0;
 				M1B=0;
 				M2A=0;
 				M2B=0;
 			}
 		}
 		
-		if(num == 2000) //2000*10us = 20ms 
+		if(num == 2000) //2000*10us = 20ms
 		{
 			num = 0;
 		}		

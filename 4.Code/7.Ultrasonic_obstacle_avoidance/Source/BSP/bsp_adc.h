@@ -17,7 +17,7 @@
 #include "stm32f10x.h"
 
 void Adc_Init(void);
-void ADC_GPIO_Init();
+void ADC_GPIO_Init(void);
 float Get_Meassure_Volotage(void);
 float Get_Battery_Volotage(void);
 void Get_Battery_Volotage_show(void);

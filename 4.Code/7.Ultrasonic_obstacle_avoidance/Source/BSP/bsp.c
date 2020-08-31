@@ -4,7 +4,7 @@
 * @author       liusen
 * @version      V1.0
 * @date         2015.01.03
-* @brief       
+* @brief        
 * @details      
 * @par History  
 *                 
@@ -41,12 +41,12 @@ void bsp_init(void)
 	MOTOR_GPIO_Init();  				
 	Servo_GPIO_Init();				    
 	TIM1_Int_Init(9, 72);				
-	Uart1_init(115200);					
+	Uart1_init(115200);				
 	Angle_J1 = 90;						
 	delay_init();
-	NVIC_Configuration(); 	 
-	GPIO_UserInit();  
-	LCD_Init0();			
+	NVIC_Configuration(); 	 			
+	GPIO_UserInit();  					
+	LCD_Init0();						
 	ADC_GPIO_Init();
 	Adc_Init();
 	Ultrasonic_GPIO_Init();

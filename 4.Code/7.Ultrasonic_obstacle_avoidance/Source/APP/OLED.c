@@ -1,6 +1,4 @@
-/*OLED Underlying driver
-*@Fractional resolution:128*64
-*Storage format
+/*
 *[0]0 1 2 3 ... 127	
 *[1]0 1 2 3 ... 127	
 *[2]0 1 2 3 ... 127	
@@ -123,7 +121,7 @@ const u8 F6x8[] =
     0x00, 0x44, 0x64, 0x54, 0x4C, 0x44 ,   // z
     0x14, 0x14, 0x14, 0x14, 0x14, 0x14     // horiz lines
 };
-//Display Chinese characters
+
 const u8 F16x16_Idx[] = 
 {
 	"测距离周长面积度高坡亩仪搜索卫星大小查记录删除系统值设单价公顷元询每电池压经纬°㎡型号版本剩余空间返回退出北亚博智能科技创客教育伏特"
@@ -336,8 +334,7 @@ const u8 F16x16[] =
 
 };
 //======================================================
-//12864 Underlying driver[8x16] Font library
-// !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~
+
 //======================================================
 const u8 F8X16[]=
 {
@@ -439,7 +436,7 @@ const u8 F8X16[]=
 
 };
 
-/* Display a solid diamond icon on a 16*16 dot matrix*/
+
 const u8 nonside[] =
 {
 	0x00,0x00,0x80,0xC0,0xE0,0xF0,0xF8,0xFC,0xF8,0xF0,0xE0,0xC0,0x80,0x00,0x00,0x00,
@@ -486,9 +483,7 @@ void LCD_WrCmd(u8 cmd)
 	//LCD_CS=1;
 }
 
-/*The Y-axis is progressively in 8 grids, 
-*and the Y-axis is 0-63, which can only be displayed in multiples of 8 grids, 
-*since the determinant can only be performed in 8 bytes.
+/*
 */
 
 void LCD_Set_Pos(u8 x, u8 y)
@@ -498,7 +493,7 @@ void LCD_Set_Pos(u8 x, u8 y)
   LCD_WrCmd((x&0x0f)|0x01); 
 } 
 
-void LCD_Set_Pos1(u8 x, u8 y)//draw point
+void LCD_Set_Pos1(u8 x, u8 y)
 { 
   LCD_WrCmd(0xb0+y);
   LCD_WrCmd(((x&0xf0)>>4)|0x10);
@@ -577,7 +572,7 @@ void LCD_Init0(void)
   //DDRA=0XFF;
   
 	LCD_SCL_SET();
-	//LCD_CS=1;	  	
+	//LCD_CS=1;	
 	
 	LCD_RST_CLR();
 	LCD_DLY_ms(50);
@@ -589,7 +584,7 @@ void LCD_Init0(void)
   LCD_WrCmd(0x40);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
   LCD_WrCmd(0x81);//--set contrast control register
   LCD_WrCmd(0xcf); // Set SEG Output Current Brightness
-  LCD_WrCmd(0xa1);//--Set SEG/Column Mapping  
+  LCD_WrCmd(0xa1);//--Set SEG/Column Mapping     
   LCD_WrCmd(0xc8);//Set COM/Row Scan Direction   
   LCD_WrCmd(0xa6);//--set normal display
   LCD_WrCmd(0xa8);//--set multiplex ratio(1 to 64)
@@ -620,7 +615,7 @@ void LCD_Init0(void)
 //==============================================================
 void LCD_PutPixel(u8 x,u8 y)
 {
-	u8 data1;  //data1
+	u8 data1;  
 	 
   //LCD_Set_Pos(x,y); 
 	data1 = 0x01<<(y%8); 	
@@ -743,7 +738,7 @@ void LCD_P14x16Str(u8 x,u8 y,u8 ch[],const u8 *F14x16_Idx,const u8 *F14x16)
 			y++;
 		}
 	  	LCD_Set_Pos(x , y); 
-	  	if(adder != 1)
+	  	if(adder != 1)	
 	  	{
 	  		LCD_Set_Pos(x , y);
 	  		for(wm = 0;wm < 14;wm++)               
@@ -758,7 +753,7 @@ void LCD_P14x16Str(u8 x,u8 y,u8 ch[],const u8 *F14x16_Idx,const u8 *F14x16)
 	  			adder += 1;
 	  		}   		
 	  	}
-	  	else			  
+	  	else			  	
 	  	{
 	  		ii += 1;
 	      	LCD_Set_Pos(x,y);
@@ -800,7 +795,7 @@ void LCD_P16x16Str(u8 x,u8 y,u8 *ch,const u8 *F16x16_Idx,const u8 *F16x16)
   	}
   	if(x>118){x=0;y++;}
   	LCD_Set_Pos(x , y); 
-  	if(adder != 1)	
+  	if(adder != 1)		
   	{
   		LCD_Set_Pos(x , y);
   		for(wm = 0;wm < 16;wm++)               
@@ -815,7 +810,7 @@ void LCD_P16x16Str(u8 x,u8 y,u8 *ch,const u8 *F16x16_Idx,const u8 *F16x16)
   			adder += 1;
   		}   		
   	}
-  	else			  
+  	else			  	
   	{
   		ii += 1;
       	LCD_Set_Pos(x,y);
@@ -833,6 +828,11 @@ void LCD_P16x16Str(u8 x,u8 y,u8 *ch,const u8 *F16x16_Idx,const u8 *F16x16)
   	ii += 2;
 	}
 }
+
+
+/*
+*
+*/
 
 void LCD_Print(u8 x, u8 y, u8 *ch,u8 char_size, u8 ascii_size)
 {

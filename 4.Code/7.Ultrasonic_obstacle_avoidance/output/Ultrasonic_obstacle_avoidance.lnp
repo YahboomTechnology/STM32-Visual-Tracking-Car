@@ -38,7 +38,7 @@
 ".\output\stm32f10x_tim.o"
 ".\output\stm32f10x_usart.o"
 ".\output\stm32f10x_wwdg.o"
---strict --scatter ".\output\Ultrasonic obstacle avoidance.sct"
+--strict --scatter ".\output\Ultrasonic_obstacle_avoidance.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers
---list ".\Ultrasonic obstacle avoidance.map" -o ".\output\Ultrasonic obstacle avoidance.axf"
+--list ".\Ultrasonic_obstacle_avoidance.map" -o .\output\Ultrasonic_obstacle_avoidance.axf

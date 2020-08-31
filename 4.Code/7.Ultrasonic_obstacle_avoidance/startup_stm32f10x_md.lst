@@ -477,10 +477,11 @@ ARM Macro Assembler    Page 8
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\output\startup_stm32f10x_md.d -o.\output\startup_stm32f10x_md.o 
--IF:\15.STM32视觉巡线小车\STM32-Visual-Tracking-Car\4.Code\7.Ultrasonic_obstacl
-e_avoidance\RTE -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include -IDevice\In
-clude --predefine="__UVISION_VERSION SETA 514" --predefine="_RTE_ SETA 1" --lis
-t=.\startup_stm32f10x_md.lst Source\CMSIS\startup\startup_stm32f10x_md.s
+-IF:\15.STM32视觉巡线小车\5.程序源码20191028修改了代码出现的Warning\7.Ultrasoni
+c_obstacle_avoidance\RTE -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\4.2.0\CMSIS\Include -I
+Device\Include --predefine="__UVISION_VERSION SETA 514" --predefine="_RTE_ SETA
+ 1" --list=.\startup_stm32f10x_md.lst Source\CMSIS\startup\startup_stm32f10x_md
+.s
 
 
 

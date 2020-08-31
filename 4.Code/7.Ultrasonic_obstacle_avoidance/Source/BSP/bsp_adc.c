@@ -21,6 +21,7 @@ void ADC_GPIO_Init()
 {
 
 	GPIO_InitTypeDef GPIO_InitStructure;
+
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC , ENABLE ); 
 
 	GPIO_InitStructure.GPIO_Pin =GPIO_Pin_4;
@@ -56,11 +57,11 @@ void Adc_Init(void)
 	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right; 
 	ADC_InitStructure.ADC_NbrOfChannel = 1; 
-	ADC_Init(ADC1, &ADC_InitStructure);
+	ADC_Init(ADC1, &ADC_InitStructure); 
 	ADC_Cmd(ADC1, ENABLE); 
 	ADC_ResetCalibration(ADC1); 
 	while(ADC_GetResetCalibrationStatus(ADC1)); 
-	ADC_StartCalibration(ADC1);
+	ADC_StartCalibration(ADC1); 
 	while(ADC_GetCalibrationStatus(ADC1)); 
 }
 /**
@@ -68,17 +69,17 @@ void Adc_Init(void)
 * @author        liusen
 * @date          2017.08.17     
 * @brief         
-* @param[in]     ch:0~3
+* @param[in]     
 * @param[out]    void
 * @retval        void
-* @par History   
+* @par History  
 */
 
 static u16 Get_Adc(u8 ch)
 {
-	
+
 	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_239Cycles5 );
-	
+
 	ADC_SoftwareStartConvCmd(ADC1, ENABLE); 
 	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC ));
 	return ADC_GetConversionValue(ADC1); 
@@ -88,8 +89,8 @@ static u16 Get_Adc(u8 ch)
 * Function       Get_Adc_Average
 * @author        liusen
 * @date          2017.08.17    
-* @brief         
-* @param[in]     ch: 0~3 ; times:Number of measurements
+* @brief        
+* @param[in]     
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -112,7 +113,7 @@ static u16 Get_Adc_Average(u8 ch, u8 times)
 * @author        liusen
 * @date          2017.08.17  
 * @brief         
-* @param[in]     ch: 0~3 ; times:Number of measurements
+* @param[in]    
 * @param[out]    void
 * @retval        void
 * @par History   
@@ -142,7 +143,7 @@ float Get_Battery_Volotage(void)
 	float temp;
 	ADC_GPIO_Init();
 	temp = Get_Measure_Volotage();
-	temp = temp * 4.0; //temp*(5+5)/5;  
+	temp = temp * 4.0; //temp*(5+5)/5;  3£º
 	return temp;
 }
 void Get_Battery_Volotage_show()

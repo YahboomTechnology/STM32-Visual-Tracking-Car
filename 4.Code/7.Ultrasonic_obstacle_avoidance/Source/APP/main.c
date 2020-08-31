@@ -4,7 +4,7 @@
 * @author       sax_john
 * @version      V1.0
 * @date         2018.10.17
-* @brief       
+* @brief        
 * @details      
 * @par History  
 *                 

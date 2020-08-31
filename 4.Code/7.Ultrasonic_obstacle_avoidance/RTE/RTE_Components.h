@@ -3,7 +3,7 @@
  * Auto generated Run-Time-Environment Component Configuration File
  *      *** Do not modify ! ***
  *
- * Project: 'Ultrasonic obstacle avoidance' 
+ * Project: 'Ultrasonic_obstacle_avoidance' 
  * Target:  'Target 1' 
  */
 
